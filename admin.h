@@ -1,0 +1,9 @@
+#ifndef CCNY_PRINTING_SYSTEM_ADMIN_H
+#define CCNY_PRINTING_SYSTEM_ADMIN_H
+
+class admin {
+
+};
+
+
+#endif //CCNY_PRINTING_SYSTEM_ADMIN_H

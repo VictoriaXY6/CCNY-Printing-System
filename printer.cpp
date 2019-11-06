@@ -1,54 +1,41 @@
 #include <iostream>
-
+#include "printer.h"
+#include "admin.h"
+#include "student.h"
 using namespace std;
 
-struct node {
-	int id;
-	node *next;
+void printer::enqueue(int userID) {
+    node *temp = new node(userID);
 
-	node(userID) {
-		this->id=userID;
-		this->next=NULL;
-	}
-}; 
+    if (head==NULL) {
+        head=temp;
+        tail=temp;
+    }
+    else {
+        tail->next=temp;
+        tail=temp;
+    }
 
-class printer {
-	node *head = NULL;
-	node *tail = NULL;
+    length++;
+}
 
-	int length;
+int printer::dequeue() {
+    if (head!=NULL) {
+        node *temp = head;
+        head = head->next;
+        int id_to_remove = temp->id;
+        delete(temp);
+        return id_to_remove;
+    }
+    else {
+        return 0;
+    }
+}
 
-	void enqueue(int userID) {
-		node *temp = new node(userID);
-
-		if (head==NULL) {
-			head=temp;
-			tail=temp;
-		}
-		else {
-			tail->next=temp;
-			tail=temp;
-		}
-	}
-
-	int dequeue() {
-		if (head!=NULL) {
-			node *temp = head;
-			head = head->next;
-			int id_to_remove = temp->id;
-			del(temp);
-			return id_to_remove;
-		}
-		else {
-			return 0;
-		}
-	}
-
-
-	void display() {
-		Node *curr = head;
-		while(curr != NULL) {
-			cout<<curr->id;
-		}
-	}
-};
+void printer::display() {
+    node *curr = head;
+    while(curr != NULL) {
+        cout<<curr->id;
+        curr = curr->next;
+    }
+}

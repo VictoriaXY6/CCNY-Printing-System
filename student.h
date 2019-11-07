@@ -10,8 +10,11 @@ public:
     string lastName;
     string password;
 
-    void print(printer p);
-
+    student(int emplID);
+    student(int empldID, string firstName, string lastName, string password);
+    void print(printer &p);
+    void cancelPrint(printer &p);
+    int checkPosition(printer p);
 };
 
 

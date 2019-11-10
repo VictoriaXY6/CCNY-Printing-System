@@ -23,9 +23,9 @@ int printer::dequeue() {
     if (head!=NULL) {
         node *temp = head;
         head = head->next;
-        int id_to_remove = temp->id;
+        int id = temp->id;
         delete(temp);
-        return id_to_remove;
+        return id;
     }
     else {
         return 0;
@@ -38,4 +38,15 @@ void printer::display() {
         cout<<curr->id;
         curr = curr->next;
     }
+}
+
+int printer::length() {
+    int num;
+    node *curr = head;
+    while(curr != NULL) {
+        num++;
+        curr = curr->next;
+    }
+
+    return num;
 }

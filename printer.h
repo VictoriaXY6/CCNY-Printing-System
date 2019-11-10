@@ -20,6 +20,7 @@ public:
     void enqueue(int userID);
     int dequeue();
     void display();
+    int length();
 
 };
 

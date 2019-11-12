@@ -5,7 +5,7 @@ struct node {
     int id;
     node *next;
 
-    node(int userID) {
+    node(int userID = 0) {
         this->id=userID;
         this->next=NULL;
     }

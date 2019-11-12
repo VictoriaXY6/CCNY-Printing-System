@@ -26,7 +26,6 @@ void student::cancelPrint(printer &p) {
     }
     node *temp = curr;
     prev->next = curr->next;
-    del(temp);
 }
 
 //checks what position the student is in the queue
@@ -35,7 +34,7 @@ int student::checkPosition(printer p) {
     node *curr = p.head;
     while (curr->id != this->emplID) {
         curr = curr->next;
-        counter++;
+        pos++;
     }
-    return counter;
+    return pos;
 }

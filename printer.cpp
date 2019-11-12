@@ -40,7 +40,7 @@ void printer::display() {
     }
 }
 
-int printer::length() {
+int printer::lengthOfQueue() {
     int num;
     node *curr = head;
     while(curr != NULL) {

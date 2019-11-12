@@ -12,20 +12,15 @@ vector<student*> studentInfo;
 vector<printer> nacPrinters = {p1, p2, p3, p4, p5, p6, p7};
 
 int fastestPrinter() {
-	int quickestPrinterPos = 0;
-    printer *quickestPrinter = nacPrinters[0];
-
-    int i=0;
-	vector<printer>::iterator itr;
-	for(itr=nacPrinters.begin(); itr<nacPrinters.end(); itr++) {
-		if (quickestPrinter->lengthOfQueue() > itr->lengthOfQueue()) {
-            quickestPrinter=itr;
-			quickestPrinterPos = i;
+    int quickestPrinterPos = 0;
+    printer quickestPrinter = nacPrinters[0];
+    for (int i = 0; i < nacPrinters.size(); ++i) {
+        if (quickestPrinter.lengthOfQueue() < nacPrinters.at(i).lengthOfQueue()) {
+            quickestPrinter = nacPrinters[i];
         }
-        i++;
-	}
-
-	return quickestPrinterPos;
+        quickestPrinterPos++;
+    }
+    return quickestPrinterPos;
 }
 
 int main() {
@@ -40,24 +35,24 @@ int main() {
         if (key1==1) {
             do {
                 cout<<"Existing students press 1. New students press 2. Press 3 to go back."<<endl;
-            	cin>>key2;
+                cin>>key2;
                 if (key2==1) {
-            		cout<<"Enter username";
-            		cin>>username;
-            		cout<<"Enter password";
-            		cin>>password;
-            		vector<student>::iterator itr; 
-            		for(itr=studentInfo.begin(); itr<studentInfo.end(); itr++) { // authentication
-            			if (itr->username==username && itr->password==password) { // if user crendentials match, complete print job
+                    cout<<"Enter username";
+                    cin>>username;
+                    cout<<"Enter password";
+                    cin>>password;
+                    vector<student>::iterator itr;
+                    for(itr=studentInfo.begin(); itr<studentInfo.end(); itr++) { // authentication
+                        if (itr->username==username && itr->password==password) { // if user crendentials match, complete print job
                             int fastestPos=fastestPrinter();
-            				itr->print(nacPrinters[fastestPos]);
+                            itr->print(nacPrinters[fastestPos]);
                             cout<<"Hi "<<itr->name<<". Print job has been completed successfully!";
                             break;
-            			}
-            			else {
-            				cout<<"Invalid username or password.";
-            			}
-            		}
+                        }
+                        else {
+                            cout<<"Invalid username or password.";
+                        }
+                    }
                 }
                 else if (key2==2) {
                     cout<<"Enter name";

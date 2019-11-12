@@ -38,3 +38,6 @@ int student::checkPosition(printer p) {
     }
     return pos;
 }
+
+
+//TESTTTTTT

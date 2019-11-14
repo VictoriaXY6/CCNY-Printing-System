@@ -25,9 +25,11 @@ int printer::dequeue() {
         head = head->next;
         int id = temp->id;
         delete(temp);
+        length--;
         return id;
     }
     else {
+        length--;
         return 0;
     }
 }
@@ -35,9 +37,10 @@ int printer::dequeue() {
 void printer::display() {
     node *curr = head;
     while(curr != NULL) {
-        cout<<curr->id;
+        cout<<curr->id << " ";
         curr = curr->next;
     }
+    cout << endl;
 }
 
 int printer::lengthOfQueue() {
@@ -47,6 +50,5 @@ int printer::lengthOfQueue() {
         num++;
         curr = curr->next;
     }
-
     return num;
 }

@@ -13,18 +13,17 @@ vector<printer> nacPrinters = {p1, p2, p3, p4, p5, p6, p7};
 
 int fastestPrinter() {
     int quickestPrinterPos = 0;
-    printer quickestPrinter = nacPrinters[0];
+    printer quickestPrinter = nacPrinters.at(0);
     for (int i = 0; i < nacPrinters.size(); ++i) {
-        if (quickestPrinter.lengthOfQueue() < nacPrinters.at(i).lengthOfQueue()) {
+        if (quickestPrinter.length > nacPrinters.at(i).length) {
             quickestPrinter = nacPrinters[i];
+            quickestPrinterPos = i;
         }
-        quickestPrinterPos++;
     }
     return quickestPrinterPos;
 }
 
 int main() {
-
     int key1, key2, key3;
     string name, username, password;
     int emplID;
@@ -70,6 +69,7 @@ int main() {
             } while (key2!=3);
         }
     } while (key1!=3);
+
 
     return 0;
 }

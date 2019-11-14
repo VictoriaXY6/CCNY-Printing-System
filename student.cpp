@@ -12,7 +12,8 @@ student::student(int empldID, string name, string username, string password)
         : emplID(empldID), name(name), username(username), password(password) {}
 
 //pushes student's print job to whatever printer they select
-void student::print(printer &p) {
+void student::print(printer &p, int paper) {
+    pageLimit -= paper;
     p.enqueue(emplID);
 }
 

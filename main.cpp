@@ -14,9 +14,9 @@ vector<printer> nacPrinters = {p1, p2, p3, p4, p5, p6, p7};
 int fastestPrinter() {
     int quickestPrinterPos = 0;
     printer quickestPrinter = nacPrinters.at(0);
-    for (int i = 0; i < nacPrinters.size(); ++i) {
-        if (quickestPrinter.length > nacPrinters.at(i).length) {
-            quickestPrinter = nacPrinters[i];
+    for (int i = 0; i < nacPrinters.size(); i++) {
+        if (quickestPrinter.lengthOfQueue() > nacPrinters.at(i).lengthOfQueue()) {
+            quickestPrinter = nacPrinters.at(i);
             quickestPrinterPos = i;
         }
     }
@@ -44,7 +44,7 @@ int main() {
                     for(itr=studentInfo.begin(); itr<studentInfo.end(); itr++) { // authentication
                         if (itr->username==username && itr->password==password) { // if user crendentials match, complete print job
                             int fastestPos=fastestPrinter();
-                            itr->print(nacPrinters[fastestPos]);
+                            itr->print(nacPrinters.at(fastestPos));
                             cout<<"Hi "<<itr->name<<". Print job has been completed successfully!";
                             break;
                         }

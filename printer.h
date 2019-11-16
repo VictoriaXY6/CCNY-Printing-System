@@ -3,10 +3,12 @@
 
 struct node {
     int id;
+    int printOrder;
     node *next;
 
-    node(int userID = 0) {
+    node(int userID = 0, int printOrder = 0) {
         this->id=userID;
+        this->printOrder = printOrder;
         this->next=NULL;
     }
 };
@@ -16,12 +18,11 @@ public:
     node *head = NULL;
     node *tail = NULL;
     int length = 0;
+    int paperInPrinter = 500;
 
-    void enqueue(int userID);
+    void enqueue(int userID, int printOrder);
     int dequeue();
     void display();
-    int lengthOfQueue();
-
 };
 
 #endif //CCNY_PRINTING_SYSTEM_PRINTER_H

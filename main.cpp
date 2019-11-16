@@ -71,5 +71,9 @@ int main() {
     } while (key1!=3);
 
 
+
+
+
+
     return 0;
 }

@@ -4,19 +4,22 @@
 #include "student.h"
 using namespace std;
 
-void printer::enqueue(int userID) {
-    node *temp = new node(userID);
-
-    if (head==NULL) {
-        head=temp;
-        tail=temp;
+void printer::enqueue(int userID, int printOrder) {
+    node *temp = new node(userID, printOrder);
+    if (paperInPrinter >= printOrder) {
+        if (head==NULL) {
+            head=temp;
+            tail=temp;
+        }
+        else {
+            tail->next=temp;
+            tail=temp;
+        }
+        paperInPrinter -= printOrder;
+        length++;
+    } else {
+        cout << "Not enough papers to process print job. Contact Admin." << endl;
     }
-    else {
-        tail->next=temp;
-        tail=temp;
-    }
-
-    length++;
 }
 
 int printer::dequeue() {
@@ -36,19 +39,13 @@ int printer::dequeue() {
 
 void printer::display() {
     node *curr = head;
-    while(curr != NULL) {
-        cout<<curr->id << " ";
-        curr = curr->next;
+    if (head == NULL) {
+        cout << "No print jobs in printer" << endl;
+    } else {
+        while(curr != NULL) {
+            cout<<curr->id << " ";
+            curr = curr->next;
+        }
+        cout << endl;
     }
-    cout << endl;
-}
-
-int printer::lengthOfQueue() {
-    int num;
-    node *curr = head;
-    while(curr != NULL) {
-        num++;
-        curr = curr->next;
-    }
-    return num;
 }

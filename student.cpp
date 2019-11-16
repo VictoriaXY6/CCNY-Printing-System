@@ -11,22 +11,35 @@ student::student(int emplID) : emplID(emplID) {}
 student::student(int empldID, string name, string username, string password)
         : emplID(empldID), name(name), username(username), password(password) {}
 
-//pushes student's print job to whatever printer they select
-void student::print(printer &p, int paper) {
-    pageLimit -= paper;
-    p.enqueue(emplID);
+//pushes student's print job to whatever printer they select and prints n = printOrder pages
+void student::print(printer &p, int printOrder) {
+    if(paperLeft >= printOrder) {
+        paperLeft -= printOrder;
+        p.enqueue(emplID, printOrder);
+    } else {
+        cout << "Sorry you have used all of your papers for this semester." << endl;
+    }
 }
 
 //takes the students print job out of the queue.
 void student::cancelPrint(printer &p) {
     node *prev = new node;
     node *curr = p.head;
-    while (curr->id != this->emplID) {
-        prev = curr;
-        curr = curr->next;
+
+    if (curr->id == emplID) {
+        paperLeft += curr->printOrder;
+        p.paperInPrinter += curr->printOrder;
+        p.head = p.head->next;
+    } else {
+        while (curr->id != emplID) {
+            prev = curr;
+            curr = curr->next;
+        }
+        node *temp = curr;
+        paperLeft += temp->printOrder;
+        p.paperInPrinter += temp->printOrder;
+        prev->next = curr->next;
     }
-    node *temp = curr;
-    prev->next = curr->next;
 }
 
 //checks what position the student is in the queue

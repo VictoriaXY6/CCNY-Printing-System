@@ -6,14 +6,14 @@ using namespace std;
 class student {
 public:
     int emplID;
-    int pageLimit = 500;
+    int paperLeft = 1000;
     string name;
     string username;
     string password;
 
     student(int emplID);
     student(int empldID, string name, string username, string password);
-    void print(printer &p, int paper);
+    void print(printer &p, int printOrder);
     void cancelPrint(printer &p);
     int checkPosition(printer p);
 };

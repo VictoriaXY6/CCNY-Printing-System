@@ -40,15 +40,14 @@ int main() {
                     cin>>username;
                     cout<<"Enter password";
                     cin>>password;
-                    vector<student>::iterator itr;
-                    for(itr=studentInfo.begin(); itr<studentInfo.end(); itr++) { // authentication
-                        if (itr->username==username && itr->password==password) { // if user crendentials match, complete print job
+                    for(int i=0; i<studentInfo.size(); i++) { // authentication
+                        if (studentInfo.at(i)->username==username && studentInfo.at(i)->password==password) { // if user crendentials match, complete print job
                             int fastestPos=fastestPrinter();
                             cout<<"Enter number of pages to print.";
                             int numOfPages;
                             cin>>numOfPages;
-                            itr->print(nacPrinters.at(fastestPos),numOfPages);
-                            cout<<"Hi "<<itr->name<<". Print job has been added.";
+                            studentInfo.at(i)->print(nacPrinters.at(fastestPos),numOfPages);
+                            cout<<"Hi "<<studentInfo.at(i)->name<<". Print job has been added.";
                             break;
                         }
                         else {

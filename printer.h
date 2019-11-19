@@ -18,7 +18,7 @@ public:
     node *head = NULL;
     node *tail = NULL;
     int length = 0;
-    int paperInPrinter = 500;
+    int printerPageLimit = 500;
 
     void enqueue(int userID, int printOrder);
     int dequeue();

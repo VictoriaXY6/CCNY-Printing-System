@@ -6,7 +6,7 @@ using namespace std;
 class student {
 public:
     int emplID;
-    int paperLeft = 1000;
+    int studentPageLimit = 1000;
     string name;
     string username;
     string password;

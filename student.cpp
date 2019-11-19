@@ -13,8 +13,8 @@ student::student(int empldID, string name, string username, string password)
 
 //pushes student's print job to whatever printer they select and prints n = printOrder pages
 void student::print(printer &p, int printOrder) {
-    if(paperLeft >= printOrder) {
-        paperLeft -= printOrder;
+    if(studentPageLimit >= printOrder) {
+        studentPageLimit -= printOrder;
         p.enqueue(emplID, printOrder);
     } else {
         cout << "Sorry you have used all of your papers for this semester." << endl;
@@ -27,8 +27,8 @@ void student::cancelPrint(printer &p) {
     node *curr = p.head;
 
     if (curr->id == emplID) {
-        paperLeft += curr->printOrder;
-        p.paperInPrinter += curr->printOrder;
+        studentPageLimit += curr->printOrder;
+        p.printerPageLimit += curr->printOrder;
         p.head = p.head->next;
     } else {
         while (curr->id != emplID) {
@@ -36,8 +36,8 @@ void student::cancelPrint(printer &p) {
             curr = curr->next;
         }
         node *temp = curr;
-        paperLeft += temp->printOrder;
-        p.paperInPrinter += temp->printOrder;
+        studentPageLimit += temp->printOrder;
+        p.printerPageLimit += temp->printOrder;
         prev->next = curr->next;
     }
 }

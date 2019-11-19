@@ -6,7 +6,7 @@ using namespace std;
 
 void printer::enqueue(int userID, int printOrder) {
     node *temp = new node(userID, printOrder);
-    if (paperInPrinter >= printOrder) {
+    if (printerPageLimit >= printOrder) {
         if (head==NULL) {
             head=temp;
             tail=temp;
@@ -15,7 +15,7 @@ void printer::enqueue(int userID, int printOrder) {
             tail->next=temp;
             tail=temp;
         }
-        paperInPrinter -= printOrder;
+        printerPageLimit -= printOrder;
         length++;
     } else {
         cout << "Not enough papers to process print job. Contact Admin." << endl;

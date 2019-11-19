@@ -47,7 +47,9 @@ int main() {
                             int numOfPages;
                             cin>>numOfPages;
                             studentInfo.at(i)->print(nacPrinters.at(fastestPos),numOfPages);
-                            cout<<"Hi "<<studentInfo.at(i)->name<<". Print job has been added.";
+                            cout<<"Hi "<<studentInfo.at(i)->name<<". Print job has been added." << endl;
+                            cout << "Paper Left in printer: " << nacPrinters.at(fastestPos).printerPageLimit << endl;
+                            cout << studentInfo.at(i)->name <<" has " << studentInfo.at(i)->studentPageLimit << " papers left." << endl;
                             break;
                         }
                         else {

@@ -15,7 +15,7 @@ int fastestPrinter() {
     int quickestPrinterPos = 0;
     printer quickestPrinter = nacPrinters.at(0);
     for (int i = 0; i < nacPrinters.size(); i++) {
-        if (quickestPrinter.lengthOfQueue() > nacPrinters.at(i).lengthOfQueue()) {
+        if (quickestPrinter.length > nacPrinters.at(i).length) {
             quickestPrinter = nacPrinters.at(i);
             quickestPrinterPos = i;
         }
@@ -44,8 +44,11 @@ int main() {
                     for(itr=studentInfo.begin(); itr<studentInfo.end(); itr++) { // authentication
                         if (itr->username==username && itr->password==password) { // if user crendentials match, complete print job
                             int fastestPos=fastestPrinter();
-                            itr->print(nacPrinters.at(fastestPos));
-                            cout<<"Hi "<<itr->name<<". Print job has been completed successfully!";
+                            cout<<"Enter number of pages to print.";
+                            int numOfPages;
+                            cin>>numOfPages;
+                            itr->print(nacPrinters.at(fastestPos),numOfPages);
+                            cout<<"Hi "<<itr->name<<". Print job has been added.";
                             break;
                         }
                         else {

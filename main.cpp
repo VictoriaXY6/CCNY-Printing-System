@@ -14,7 +14,7 @@ vector<student*> studentInfo;
 //vector<printer> nacPrinters = {p1, p2, p3, p4, p5, p6, p7};
 vector<printer> nacPrinters;
 
-student s1(1111, "John Doe","johnD","john");
+student s1(1111, "john","john","john");
 
 int fastestPrinter() {
     int quickestPrinterPos = 0;

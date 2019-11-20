@@ -43,7 +43,7 @@ void student::cancelPrint(printer &p) {
 }
 
 //checks what position the student is in the queue
-int student::checkPosition(printer p) {
+int student::checkPosition(printer &p) {
     int pos = 1;
     node *curr = p.head;
     while (curr->id != this->emplID) {

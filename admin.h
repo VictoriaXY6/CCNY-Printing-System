@@ -3,6 +3,12 @@
 
 class admin {
 
+public:
+
+	void clearPrinter(printer &p);
+	void deletePrintJob(printer &p, student &s);
+    void addpaper(printer &p);
+
 };
 
 

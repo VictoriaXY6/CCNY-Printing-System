@@ -43,6 +43,7 @@ int main() {
 
     do {
         system("clear");
+        cout<<"\x1b[42m Home Screen \x1b[0m"<<endl<<endl;
         cout<<"Welcome to the Nac Printing System!"<<endl;
         cout<<"Press 1 if you are a student."<<endl;
         cout<<"Press 2 if you are an admin."<<endl;
@@ -52,6 +53,7 @@ int main() {
         if (key1==1) {
             do {
                 system("clear");
+                cout<<"\x1b[46m Student Screen \x1b[0m"<<endl<<endl;
                 cout<<"Press 1 if you are an existing student."<<endl;
                 cout<<"Press 2 if you are a new student."<<endl;
                 cout<<"Press 3 to go back."<<endl;
@@ -74,6 +76,7 @@ int main() {
                     if (studentInSystem==true) {
                         do {
                             system("clear");
+                            cout<<"\x1b[45m Printing Screen \x1b[0m"<<endl<<endl;
                             cout<<"Welcome "<<studentInfo.at(i)->name<<"!"<<endl;
                             cout<<"Press 1 if add print job."<<endl;
                             cout<<"Press 2 to check status of print job."<<endl;

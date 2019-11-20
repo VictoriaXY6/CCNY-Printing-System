@@ -95,16 +95,17 @@ int main() {
                                 cout<<"Print job has been added to printer number "<<fastestPos<<endl;
                                 cout<<"Paper Left in printer: "<<nacPrinters.at(fastestPos).printerPageLimit<<endl;
                                 cout<<studentInfo.at(i)->name<<" has "<<studentInfo.at(i)->studentPageLimit<<" papers left." << endl;
+                                usleep(5000000); 
                             }
                             else if (key3==2) {
                                 int printerStudentPicked = studentInfo.at(i)->printerPicked;
-                                studentInfo.at(i)->cancelPrint(nacPrinters.at(printerStudentPicked));
-                                cout<<"Print job succesfully cancelled.";
+                                int positionInQueue = studentInfo.at(i)->checkPosition(nacPrinters.at(printerStudentPicked));
+                                cout<<"There are "<<positionInQueue<< "students ahead of you.";
                             }
                             else if (key3==3) {
                                 int printerStudentPicked = studentInfo.at(i)->printerPicked;
-                                int positionInQueue = studentInfo.at(i)->checkPosition(nacPrinters.at(printerStudentPicked));
-                                cout<<"There are "<<positionInQueue<< "students ahead of you.";
+                                studentInfo.at(i)->cancelPrint(nacPrinters.at(printerStudentPicked));
+                                cout<<"Print job succesfully cancelled.";
                             }
                         } while (key3!=4);
                     }

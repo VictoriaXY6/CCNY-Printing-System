@@ -94,27 +94,31 @@ int main() {
                                 studentInfo.at(i)->printerPicked=fastestPos;
                                 cout<<"Print job has been added to printer number "<<fastestPos<<endl;
                                 cout<<"Paper Left in printer: "<<nacPrinters.at(fastestPos).printerPageLimit<<endl;
-                                cout<<studentInfo.at(i)->name<<" has "<<studentInfo.at(i)->studentPageLimit<<" papers left."<<endl;
+                                cout<<studentInfo.at(i)->name<<" has "<<studentInfo.at(i)->studentPageLimit<<" papers left."<<endl<<endl;
+                                cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000); 
                             }
                             else if (key3==2) {
                                 system("clear");
                                 int printerStudentPicked = studentInfo.at(i)->printerPicked;
                                 int positionInQueue = studentInfo.at(i)->checkPosition(nacPrinters.at(printerStudentPicked));
-                                cout<<"There are "<<positionInQueue<< "students ahead of you."<<endl;
+                                cout<<"There are "<<positionInQueue<< "students ahead of you."<<endl<<endl;
+                                cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }
                             else if (key3==3) {
                                 system("clear");
                                 int printerStudentPicked = studentInfo.at(i)->printerPicked;
                                 studentInfo.at(i)->cancelPrint(nacPrinters.at(printerStudentPicked));
-                                cout<<"Print job succesfully cancelled."<<endl;
+                                cout<<"Print job succesfully cancelled."<<endl<<endl;
+                                cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }
                         } while (key3!=4);
                     }
                     else {
-                        cout<<"Invalid username or password."<<endl;
+                        cout<<"Invalid username or password."<<endl<<endl;
+                        cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                         usleep(5000000); // pause for 5 sec
                     }
                 }
@@ -130,7 +134,8 @@ int main() {
                     cin>>password;
                     student *newStudent = new student(emplID,name,username,password);
                     studentInfo.push_back(newStudent);
-                    cout<<"New Account Created for "<<name<<"!"<<endl;
+                    cout<<"New Account Created for "<<name<<"!"<<endl<<endl;
+                    cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                     usleep(5000000); // pause for 5 sec
                 }
             } while (key2!=3);
@@ -160,7 +165,8 @@ int main() {
                         cin>>printerNumber;
                         admin a0;
                         a0.clearPrinter(nacPrinters.at(printerNumber));
-                        cout<<"Printer "<<printerNumber<<" has been cleared."<<endl;
+                        cout<<"Printer "<<printerNumber<<" has been cleared."<<endl<<endl;
+                        cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                         usleep(5000000); 
                     }
                     else if (key4==2) {
@@ -180,13 +186,13 @@ int main() {
                             admin a0;
                             int printerStudentPicked = studentInfo.at(i)->printerPicked;
                             a0.deletePrintJob(nacPrinters.at(printerStudentPicked),studentInfo.at(i));
-                            cout<<"Student "<<studentInfo.at(i)->emplID<<"'s print job has been removed."<<endl;
-                            usleep(5000000);
+                            cout<<"Student "<<studentInfo.at(i)->emplID<<"'s print job has been removed."<<endl<<endl;
                         }
                         else {
-                            cout<<"Student not found."<<endl;
-                            usleep(5000000);
+                            cout<<"Student not found."<<endl<<endl;
                         }
+                        usleep(5000000);
+                        cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                     }
                     else if (key4==3) {
                         system("clear");
@@ -195,13 +201,15 @@ int main() {
                         cin>>printerNumber;
                         admin a0;
                         a0.addpaper(nacPrinters.at(printerNumber));
-                        cout<<"Printer "<<printerNumber<<" has been restocked."<<endl;
+                        cout<<"Printer "<<printerNumber<<" has been restocked."<<endl<<endl;
+                        cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                         usleep(5000000);
                     }
                 } while (key4!=4);
             }
             else {
-                cout<<"Admin accessed denied."<<endl;
+                cout<<"Admin accessed denied."<<endl<<endl;
+                cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                 usleep(5000000); // pause for 5 sec
             }
         }

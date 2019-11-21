@@ -19,7 +19,8 @@ void admin::deletePrintJob(printer &p, student &s){
         s.studentPageLimit += curr->printOrder;
         p.printerPageLimit += curr->printOrder;
         p.head = p.head->next;
-    } else {
+    } 
+    else {
         while (curr->id != s.emplID) {
             prev = curr;
             curr = curr->next;

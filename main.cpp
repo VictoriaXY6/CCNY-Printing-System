@@ -37,7 +37,7 @@ int main() {
     nacPrinters.push_back(p5);
     nacPrinters.push_back(p6);
     nacPrinters.push_back(p7);
-    int key1, key2, key3;
+    int key1, key2, key3, key4;
     string name, username, password;
     int emplID;
 
@@ -131,12 +131,76 @@ int main() {
                 }
             } while (key2!=3);
         }
+        else if (key1==2) {
+            system("clear");
+            bool studentInSystem=false;
+            cout<<"Enter username: ";
+            cin>>username;
+            cout<<"Enter password: ";
+            cin>>password;
+            if (username=="admin" && password=="admin") {
+                do {
+                    system("clear");
+                    cout<<"\x1b[31m Admin Screen \x1b[0m"<<endl<<endl;
+                    cout<<"Welcome Admin!"<<endl;
+                    cout<<"Press 1 if clear printer."<<endl;
+                    cout<<"Press 2 to delete specific print job."<<endl;
+                    cout<<"Press 3 to add paper to printer."<<endl;
+                    cout<<"Press 4 to log out."<<endl;
+                    cout<<"Enter option: ";
+                    cin>>key4;
+                    if (key4==1) {
+                        system("clear");
+                        cout<<"Which printer do you want to clear: ";
+                        int printerNumber;
+                        cin>>printerNumber;
+                        admin a0;
+                        a0.clearPrinter(nacPrinters.at(printerNumber));
+                        cout<<"Printer "<<printerNumber<<" has been cleared."<<endl;
+                        usleep(5000000); 
+                    }
+                    else if (key4==2) {
+                        system("clear");
+                        cout<<"Enter student ID: ";
+                        int studentID;
+                        cin>>studentID;
+                        bool studentIdExists=false;
+                        int i;
+                        for (i = 0; i < studentInfo.size(); i++) {
+                            if (studentInfo.at(i)->emplID==studentID) {
+                                studentIdExists=true;
+                                break;
+                            }
+                        }
+                        if (studentIdExists==true) {
+                            admin a0;
+                            int printerStudentPicked = studentInfo.at(i)->printerPicked;
+                            a0.deletePrintJob(nacPrinters.at(printerStudentPicked),studentInfo.at(i));
+                            cout<<"Student "<<studentInfo.at(i)->emplID<<"'s print job has been removed."<<endl;
+                        }
+                        else {
+                            cout<<"Student not found.";
+                        }
+                        usleep(5000000);
+                    }
+                    else if (key4==3) {
+                        system("clear");
+                        cout<<"Which printer do you want to add paper to: ";
+                        int printerNumber;
+                        cin>>printerNumber;
+                        admin a0;
+                        a0.addpaper(nacPrinters.at(printerNumber));
+                        cout<<"Printer "<<printerNumber<<" has been restocked."<<endl;
+                        usleep(5000000);
+                    }
+                } while (key4!=4);
+            }
+            else {
+                cout<<"Admin accessed denied."<<endl;
+                usleep(5000000); // pause for 5 sec
+            }
+        }
     } while (key1!=3);
-
-
-
-
-
 
     return 0;
 }

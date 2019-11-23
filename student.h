@@ -12,11 +12,10 @@ public:
     string username;
     string password;
 
-    student(int emplID);
     student(int empldID, string name, string username, string password);
     void print(printer &p, int printOrder);
     void cancelPrint(printer &p);
-    int checkPosition(printer &p);
+    void checkPosition(printer &p);
 };
 
 

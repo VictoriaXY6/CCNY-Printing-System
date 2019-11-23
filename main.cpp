@@ -91,17 +91,16 @@ int main() {
                                 cin>>numOfPages;
                                 studentInfo.at(i)->print(nacPrinters.at(fastestPos),numOfPages);
                                 studentInfo.at(i)->printerPicked=fastestPos;
-                                cout<<"Print job has been added to printer number "<<fastestPos<<endl;
+                                cout<<"Print job has been added to printer number "<<fastestPos+1<<endl;
                                 cout<<"Paper Left in printer: "<<nacPrinters.at(fastestPos).printerPageLimit<<endl;
                                 cout<<studentInfo.at(i)->name<<" has "<<studentInfo.at(i)->studentPageLimit<<" papers left."<<endl<<endl;
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
-                                usleep(5000000); 
+                                usleep(5000000);
                             }
                             else if (key3=="2") {
                                 system("clear");
                                 int printerStudentPicked = studentInfo.at(i)->printerPicked;
-                                int positionInQueue = studentInfo.at(i)->checkPosition(nacPrinters.at(printerStudentPicked));
-                                cout<<"There are "<<positionInQueue<< "students ahead of you."<<endl<<endl;
+                                studentInfo.at(i)->checkPosition(nacPrinters.at(printerStudentPicked));
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }
@@ -173,7 +172,7 @@ int main() {
                         a0.clearPrinter(nacPrinters.at(printerNumber));
                         cout<<"Printer "<<printerNumber<<" has been cleared."<<endl<<endl;
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
-                        usleep(5000000); 
+                        usleep(5000000);
                     }
                     else if (key4=="2") {
                         system("clear");

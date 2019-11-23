@@ -4,9 +4,6 @@
 #include "student.h"
 using namespace std;
 
-//constructor to only initialize emplID (for testing purpose, not intended to put in final code)
-student::student(int emplID) : emplID(emplID) {}
-
 //constructor to initialize all the information about student
 student::student(int empldID, string name, string username, string password)
         : emplID(empldID), name(name), username(username), password(password) {}
@@ -25,13 +22,22 @@ void student::print(printer &p, int printOrder) {
 void student::cancelPrint(printer &p) {
     node *prev = new node;
     node *curr = p.head;
+    int index = 0, lastOccurence = 0;
 
-    if (curr->id == emplID) {
+    while (curr != nullptr) {
+        if (curr->id == this->emplID) {
+            lastOccurence = index;
+        }
+        index++;
+        curr = curr->next;
+    }
+    curr = p.head;
+    if (lastOccurence == 0) {
         studentPageLimit += curr->printOrder;
         p.printerPageLimit += curr->printOrder;
         p.head = p.head->next;
     } else {
-        while (curr->id != emplID) {
+        for (int i = 0; i < lastOccurence; ++i) {
             prev = curr;
             curr = curr->next;
         }
@@ -39,16 +45,23 @@ void student::cancelPrint(printer &p) {
         studentPageLimit += temp->printOrder;
         p.printerPageLimit += temp->printOrder;
         prev->next = curr->next;
+        delete(temp);
+        delete (prev);
     }
+
 }
 
 //checks what position the student is in the queue
-int student::checkPosition(printer &p) {
-    int pos = 1;
+void student::checkPosition(printer &p) {
     node *curr = p.head;
-    while (curr->id != this->emplID) {
+    int index = 0, occurence = 1;
+
+    while (curr != nullptr) {
+        if (curr->id == this->emplID) {
+            cout << "Print job " << occurence << " has " << index << " jobs ahead." << endl;
+            occurence++;
+        }
+        index++;
         curr = curr->next;
-        pos++;
     }
-    return pos;
 }

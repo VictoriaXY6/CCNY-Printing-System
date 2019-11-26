@@ -19,36 +19,19 @@ void student::print(printer &p, int printOrder, string nameOfFile) {
 }
 
 //takes the students print job out of the queue.
-void student::cancelPrint(printer &p) {
+void student::cancelPrint(printer &p, string fileName) {
     node *prev = new node;
     node *curr = p.head;
-    int index = 0, lastOccurence = 0;
 
-    while (curr != nullptr) {
-        if (curr->id == this->emplID) {
-            lastOccurence = index;
-        }
-        index++;
+    while (curr->fileName != fileName) {
+        prev = curr;
         curr = curr->next;
     }
-    curr = p.head;
-    if (lastOccurence == 0) {
-        studentPageLimit += curr->printOrder;
-        p.printerPageLimit += curr->printOrder;
-        p.head = p.head->next;
-    } else {
-        for (int i = 0; i < lastOccurence; ++i) {
-            prev = curr;
-            curr = curr->next;
-        }
-        node *temp = curr;
-        studentPageLimit += temp->printOrder;
-        p.printerPageLimit += temp->printOrder;
-        prev->next = curr->next;
-        delete(temp);
-        delete (prev);
-    }
-
+    node *temp = curr;
+    studentPageLimit += temp->printOrder;
+    p.printerPageLimit += temp->printOrder;
+    prev->next = curr->next;
+    delete(temp);
 }
 
 //checks what position the student is in the queue

@@ -14,7 +14,7 @@ public:
 
     student(int empldID, string name, string username, string password);
     void print(printer &p, int printOrder, string nameOfFile);
-    void cancelPrint(printer &p);
+    void cancelPrint(printer &p, string fileName);
     void checkPosition(printer &p);
 };
 

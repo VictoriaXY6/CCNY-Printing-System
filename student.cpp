@@ -9,10 +9,10 @@ student::student(int empldID, string name, string username, string password)
         : emplID(empldID), name(name), username(username), password(password) {}
 
 //pushes student's print job to whatever printer they select and prints n = printOrder pages
-void student::print(printer &p, int printOrder) {
+void student::print(printer &p, int printOrder, string nameOfFile) {
     if(studentPageLimit >= printOrder) {
         studentPageLimit -= printOrder;
-        p.enqueue(emplID, printOrder);
+        p.enqueue(emplID, printOrder, nameOfFile);
     } else {
         cout << "Sorry you have used all of your papers for this semester." << endl;
     }

@@ -86,10 +86,13 @@ int main() {
                             if (key3=="1") {
                                 system("clear");
                                 int fastestPos=fastestPrinter();
+                                cout<<"Enter file name: ";
+                                string fileName;
+                                cin>>fileName;
                                 cout<<"Enter number of pages to print: ";
                                 int numOfPages;
                                 cin>>numOfPages;
-                                studentInfo.at(i)->print(nacPrinters.at(fastestPos),numOfPages);
+                                studentInfo.at(i)->print(nacPrinters.at(fastestPos),numOfPages,fileName);
                                 studentInfo.at(i)->printerPicked=fastestPos;
                                 cout<<"Print job has been added to printer number "<<fastestPos+1<<endl;
                                 cout<<"Paper Left in printer: "<<nacPrinters.at(fastestPos).printerPageLimit<<endl;

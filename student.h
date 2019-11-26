@@ -13,7 +13,7 @@ public:
     string password;
 
     student(int empldID, string name, string username, string password);
-    void print(printer &p, int printOrder);
+    void print(printer &p, int printOrder, string nameOfFile);
     void cancelPrint(printer &p);
     void checkPosition(printer &p);
 };

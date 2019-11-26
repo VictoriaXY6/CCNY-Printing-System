@@ -20,7 +20,7 @@ public:
     int length = 0;
     int printerPageLimit = 500;
 
-    void enqueue(int userID, int printOrder);
+    void enqueue(int userID, int printOrder, string nameOfFile);
     int dequeue();
     void display();
 };

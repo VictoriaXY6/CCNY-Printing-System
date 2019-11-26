@@ -4,8 +4,8 @@
 #include "student.h"
 using namespace std;
 
-void printer::enqueue(int userID, int printOrder) {
-    node *temp = new node(userID, printOrder);
+void printer::enqueue(int userID, int printOrder, string nameOfFile) {
+    node *temp = new node(userID, printOrder, nameOfFile);
     if (printerPageLimit >= printOrder) {
         if (head==NULL) {
             head=temp;

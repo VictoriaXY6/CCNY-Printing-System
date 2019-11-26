@@ -92,7 +92,11 @@ int main() {
                                 cout<<"Enter number of pages to print: ";
                                 int numOfPages;
                                 cin>>numOfPages;
-                                studentInfo.at(i)->print(nacPrinters.at(fastestPos),numOfPages,fileName);
+                                cout<<"Enter printer you want to use: ";
+                                cout<<"Recommended printer: "<<fastestPos<<endl;
+                                int printerToUse;
+                                cin>>printerToUse;
+                                studentInfo.at(i)->print(nacPrinters.at(printerToUse),numOfPages,fileName);
                                 studentInfo.at(i)->printerPicked=fastestPos;
                                 cout<<"Print job has been added to printer number "<<fastestPos+1<<endl;
                                 cout<<"Paper Left in printer: "<<nacPrinters.at(fastestPos).printerPageLimit<<endl;

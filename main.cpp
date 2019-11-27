@@ -3,6 +3,7 @@
 #include <string>
 #include <unistd.h>
 #include <fstream>
+#include <thread>
 #include "printer.h"
 #include "admin.h"
 #include "student.h"
@@ -53,29 +54,27 @@ student getStudentInfo(string userName, string password, bool &studentInSystem) 
     }
 }
 
-void dequeuePrintJobs(printer p1, printer p2, printer p3, printer p5, 
-                        printer p6, printer p7){
-    while(p1.length != 0 || p2.length != 0 || p3.length != 0 || p4.length != 0
-            p5.length != 0 || p6.length != 0 || p7.length != 0){
+void dequeuePrintJobs(){
+    while (true) {
+        while(nacPrinters[0].length > 0 || nacPrinters[1].length > 0 || nacPrinters[2].length > 0 || nacPrinters[3].length > 0 ||
+              nacPrinters[4].length > 0 || nacPrinters[5].length > 0 || nacPrinters[6].length > 0){
 
-        if(p1.length != 0)
-            p1.dequeue();
-        if(p2.length != 0)
-            p2.dequeue();
-        if(p3.length != 0)
-            p3.dequeue();
-        if(p4.length != 0)
-            p4.dequeue();
-        if(p5.length != 0)
-            p5.dequeue();
-        if(p6.length != 0)
-            p6.dequeue();
-        if(p7.length != 0)
-            p7.dequeue();
-        cout<<"The queues have been modified to reflect 
-        the current status of the nac printers.";
-        usleep(5000000); // go through the loop every 5 seconds until all queues are empty
-                           
+            if(nacPrinters[0].length > 0)
+                nacPrinters[0].dequeue();
+            if(nacPrinters[1].length > 0)
+                nacPrinters[1].dequeue();
+            if(nacPrinters[2].length > 0)
+                nacPrinters[2].dequeue();
+            if(nacPrinters[3].length > 0)
+                nacPrinters[3].dequeue();
+            if(nacPrinters[4].length > 0)
+                nacPrinters[4].dequeue();
+            if(nacPrinters[5].length > 0)
+                nacPrinters[5].dequeue();
+            if(nacPrinters[6].length > 0)
+                nacPrinters[6].dequeue();
+            usleep(5000000); // go through the loop every 5 seconds until all queues are empty
+        }
     }
 }
 
@@ -91,6 +90,8 @@ int main() {
     string key1, key2, key3, key4;
     string name, username, password;
     int emplID;
+    thread thread(dequeuePrintJobs);
+    thread.detach();
 
     do {
         system("clear");
@@ -166,7 +167,7 @@ int main() {
                             else if (key3=="3") {
                                 system("clear");
                                 int printerStudentPicked = studentInfo.at(i)->printerPicked;
-                                studentInfo.at(i)->cancelPrint(nacPrinters.at(printerStudentPicked));
+//                                studentInfo.at(i)->cancelPrint(nacPrinters.at(printerStudentPicked));
                                 cout<<"Print job succesfully cancelled."<<endl<<endl;
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
@@ -278,6 +279,9 @@ int main() {
             }
         }
     } while (key1!="3");
+
+
+
 
     return 0;
 }

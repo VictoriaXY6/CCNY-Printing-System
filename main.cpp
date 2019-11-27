@@ -1,11 +1,11 @@
 #include <iostream>
-#include "printer.h"
-#include "admin.h"
-#include "student.h"
 #include <vector>
 #include <string>
 #include <unistd.h>
-
+#include <fstream>
+#include "printer.h"
+#include "admin.h"
+#include "student.h"
 using namespace std;
 
 printer p1, p2, p3, p4, p5, p6, p7;
@@ -25,6 +25,32 @@ int fastestPrinter() {
         }
     }
     return quickestPrinterPos;
+}
+
+student getStudentInfo(string userName, string password, bool &studentInSystem) {
+    string tempEmpl, tempName, tempUserName, tempPassword;
+    int tempEmplID;
+    fstream data("student-info.csv");
+
+    if (!data.is_open())
+        cout << "FILE COULDN'T FILES" << endl;
+
+    while (data.good()) {
+        getline(data, tempEmpl, ',');
+        getline(data, tempName, ',');
+        getline(data, tempUserName, ',');
+        getline(data, tempPassword, '\n');
+
+        if (tempUserName == userName && tempPassword == password) {
+            tempEmplID = stoi(tempEmpl);
+            student sTemp(tempEmplID, tempName, tempUserName, tempPassword);
+            studentInSystem = true;
+            return sTemp;
+        } else {
+            studentInSystem = false;
+            cout << "Record not found" << endl;
+        }
+    }
 }
 
 int main() {

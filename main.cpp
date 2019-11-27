@@ -53,6 +53,32 @@ student getStudentInfo(string userName, string password, bool &studentInSystem) 
     }
 }
 
+void dequeuePrintJobs(printer p1, printer p2, printer p3, printer p5, 
+                        printer p6, printer p7){
+    while(p1.length != 0 || p2.length != 0 || p3.length != 0 || p4.length != 0
+            p5.length != 0 || p6.length != 0 || p7.length != 0){
+
+        if(p1.length != 0)
+            p1.dequeue();
+        if(p2.length != 0)
+            p2.dequeue();
+        if(p3.length != 0)
+            p3.dequeue();
+        if(p4.length != 0)
+            p4.dequeue();
+        if(p5.length != 0)
+            p5.dequeue();
+        if(p6.length != 0)
+            p6.dequeue();
+        if(p7.length != 0)
+            p7.dequeue();
+        cout<<"The queues have been modified to reflect 
+        the current status of the nac printers.";
+        usleep(5000000); // go through the loop every 5 seconds until all queues are empty
+                           
+    }
+}
+
 int main() {
     studentInfo.push_back(&s1);
     nacPrinters.push_back(p1);

@@ -1,5 +1,8 @@
+#include<map>
+
 #ifndef CCNY_PRINTING_SYSTEM_STUDENT_H
 #define CCNY_PRINTING_SYSTEM_STUDENT_H
+
 
 using namespace std;
 
@@ -11,6 +14,7 @@ public:
     string name;
     string username;
     string password;
+    map<string,int> printersUsed;
 
     student(int empldID, string name, string username, string password);
     void print(printer &p, int printOrder, string nameOfFile);

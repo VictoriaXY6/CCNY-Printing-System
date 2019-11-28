@@ -7,6 +7,7 @@
 #include "printer.h"
 #include "admin.h"
 #include "student.h"
+#include <map>
 using namespace std;
 
 printer p1, p2, p3, p4, p5, p6, p7;
@@ -133,6 +134,7 @@ int main() {
     string key1, key2, key3, key4;
     string name, username, password;
     int emplID;
+
     thread thread(dequeuePrintJobs);
     thread.detach();
 
@@ -173,7 +175,7 @@ int main() {
                             system("clear");
                             cout<<"\x1b[45m Printing Screen \x1b[0m"<<endl<<endl;
                             cout<<"Welcome "<<studentInfo.at(i)->name<<"!"<<endl;
-                            cout<<"Press 1 if add print job."<<endl;
+                            cout<<"Press 1 to add print job."<<endl;
                             cout<<"Press 2 to check status of print job."<<endl;
                             cout<<"Press 3 to remove print job."<<endl;
                             cout<<"Press 4 to log out."<<endl;
@@ -188,15 +190,14 @@ int main() {
                                 cout<<"Enter number of pages to print: ";
                                 int numOfPages;
                                 cin>>numOfPages;
-                                cout<<"Enter printer you want to use: ";
-                                cout<<"Recommended printer: "<<fastestPos<<endl;
+                                cout<<"Enter printer you want to use (recommended printer is "<<fastestPos+1<<"): ";
                                 int printerToUse;
                                 cin>>printerToUse;
 				//printJobPercent[fastestPos]
                                 studentInfo.at(i)->print(nacPrinters.at(printerToUse),numOfPages,fileName);
-                                studentInfo.at(i)->printerPicked=fastestPos;
-                                cout<<"Print job has been added to printer number "<<fastestPos+1<<endl;
-                                cout<<"Paper Left in printer: "<<nacPrinters.at(fastestPos).printerPageLimit<<endl;
+                                studentInfo.at(i)->printersUsed[fileName]=printerToUse;
+                                cout<<"Print job has been added to printer number "<<printerToUse<<endl;
+                                cout<<"Paper Left in printer "<<printerToUse<<": "<<nacPrinters.at(printerToUse).printerPageLimit<<endl;
                                 cout<<studentInfo.at(i)->name<<" has "<<studentInfo.at(i)->studentPageLimit<<" papers left."<<endl<<endl;
                                 PrintPerBar(nacPrinters);
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
@@ -204,15 +205,45 @@ int main() {
                             }
                             else if (key3=="2") {
                                 system("clear");
-                                int printerStudentPicked = studentInfo.at(i)->printerPicked;
-                                studentInfo.at(i)->checkPosition(nacPrinters.at(printerStudentPicked));
+                                map<string, int> fileMap = studentInfo.at(i)->printersUsed;  
+                                map<string, int>::iterator itr;
+
+                                cout<<"Print jobs for "<<studentInfo.at(i)->name<<": "<<endl;
+                                for (itr = fileMap.begin(); itr != fileMap.end(); itr++) { 
+                                    cout<<itr->first<<endl; 
+                                }
+                                cout<<"----------------------------------------------------"<<endl;
+                                cout<<"What file would you like to check status for: ";
+                                string fileToCheckStatus;
+                                cin>>fileToCheckStatus;
+                                int printerForFileToCheckStatus = fileMap.find(fileToCheckStatus)->second;
+
+                                studentInfo.at(i)->checkPosition(nacPrinters.at(printerForFileToCheckStatus-1));
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }
                             else if (key3=="3") {
                                 system("clear");
-                                int printerStudentPicked = studentInfo.at(i)->printerPicked;
-//                                studentInfo.at(i)->cancelPrint(nacPrinters.at(printerStudentPicked));
+                                map<string, int> fileMap = studentInfo.at(i)->printersUsed;  
+                                map<string, int>::iterator itr;
+
+                                cout<<"Print jobs for "<<studentInfo.at(i)->name<<": "<<endl;
+                                for (itr = fileMap.begin(); itr != fileMap.end(); itr++) { 
+                                    cout<<itr->first<<endl; 
+                                }
+                                cout<<"----------------------------------------------------"<<endl;
+                                cout<<"What file would you like to cancel printing: ";
+                                string fileNameToCancel;
+                                cin>>fileNameToCancel;
+                                int printerForFileToCancel = fileMap.find(fileNameToCancel)->second;
+
+                                // delete file from map that tracks files
+                                studentInfo.at(i)->printersUsed.erase(fileNameToCancel);
+
+                                // delete file from actual printer
+                                studentInfo.at(i)->cancelPrint(nacPrinters.at(printerForFileToCancel-1),fileNameToCancel);
+
+
                                 cout<<"Print job succesfully cancelled."<<endl<<endl;
                                 PrintPerBar(nacPrinters);
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;

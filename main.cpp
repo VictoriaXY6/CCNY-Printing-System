@@ -194,10 +194,10 @@ int main() {
                                 int printerToUse;
                                 cin>>printerToUse;
 				//printJobPercent[fastestPos]
-                                studentInfo.at(i)->print(nacPrinters.at(printerToUse),numOfPages,fileName);
+                                studentInfo.at(i)->print(nacPrinters.at(printerToUse-1),numOfPages,fileName);
                                 studentInfo.at(i)->printersUsed[fileName]=printerToUse;
                                 cout<<"Print job has been added to printer number "<<printerToUse<<endl;
-                                cout<<"Paper Left in printer "<<printerToUse<<": "<<nacPrinters.at(printerToUse).printerPageLimit<<endl;
+                                cout<<"Paper Left in printer "<<printerToUse<<": "<<nacPrinters.at(printerToUse-1).printerPageLimit<<endl;
                                 cout<<studentInfo.at(i)->name<<" has "<<studentInfo.at(i)->studentPageLimit<<" papers left."<<endl<<endl;
                                 PrintPerBar(nacPrinters);
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;

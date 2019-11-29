@@ -3,6 +3,7 @@
 #include "admin.h"
 #include "student.h"
 #include <string>
+#include <vector>
 using namespace std;
 
 void admin::clearPrinter(printer &p){

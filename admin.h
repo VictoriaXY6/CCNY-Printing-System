@@ -1,5 +1,6 @@
 #include "student.h"
 #include "printer.h"
+#include <vector>
 #ifndef CCNY_PRINTING_SYSTEM_ADMIN_H
 #define CCNY_PRINTING_SYSTEM_ADMIN_H
 

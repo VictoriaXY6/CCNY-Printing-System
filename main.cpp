@@ -10,12 +10,9 @@
 #include <map>
 using namespace std;
 
-printer p1, p2, p3, p4, p5, p6, p7;
+printer p0, p1, p2, p3, p4, p5, p6;
 vector<student*> studentInfo;
-//vector<printer> nacPrinters = {p1, p2, p3, p4, p5, p6, p7};
-vector<printer> nacPrinters;
-
-student s1(1111, "john","john","john");
+vector<printer> nacPrinters = {p0, p1, p2, p3, p4, p5, p6};
 
 int fastestPrinter() {
     int quickestPrinterPos = 0;
@@ -74,7 +71,7 @@ void dequeuePrintJobs(){
                 nacPrinters[5].dequeue();
             if(nacPrinters[6].length > 0)
                 nacPrinters[6].dequeue();
-            usleep(5000000); // go through the loop every 5 seconds until all queues are empty
+            usleep(30000000); // go through the loop every 30 seconds until all queues are empty
         }
     }
 }
@@ -82,14 +79,23 @@ void dequeuePrintJobs(){
 
 
 int main() {
+    // test John in Terminal
+    student s1(1111, "john","john","john");
     studentInfo.push_back(&s1);
-    nacPrinters.push_back(p1);
-    nacPrinters.push_back(p2);
-    nacPrinters.push_back(p3);
-    nacPrinters.push_back(p4);
-    nacPrinters.push_back(p5);
-    nacPrinters.push_back(p6);
-    nacPrinters.push_back(p7);
+
+    student s2(2222, "bhavesh","bhavesh","bhavesh");
+    studentInfo.push_back(&s1);
+    student s3(3333, "zeal","zeal","zeal");
+    studentInfo.push_back(&s1);
+    student s4(4444, "victoria","victoria","victoria");
+    studentInfo.push_back(&s1);
+    student s5(5555, "greg","greg","greg");
+    studentInfo.push_back(&s1);
+    s2.print(nacPrinters[3],10,"bhavesh.txt");
+    s3.print(nacPrinters[3],20,"zeal.txt");
+    s4.print(nacPrinters[3],30,"victoria.txt");
+    s5.print(nacPrinters[3],40,"greg.txt");
+    
     string key1, key2, key3, key4;
     string name, username, password;
     int emplID;
@@ -149,14 +155,13 @@ int main() {
                                 cout<<"Enter number of pages to print: ";
                                 int numOfPages;
                                 cin>>numOfPages;
-                                cout<<"Enter printer you want to use (recommended printer is "<<fastestPos+1<<"): ";
+                                cout<<"Enter printer you want to use (recommended printer is "<<fastestPos<<"): ";
                                 int printerToUse;
                                 cin>>printerToUse;
-				//printJobPercent[fastestPos]
-                                studentInfo.at(i)->print(nacPrinters.at(printerToUse-1),numOfPages,fileName);
-                                studentInfo.at(i)->printersUsed[fileName]=printerToUse;
+                                studentInfo.at(i)->print(nacPrinters.at(printerToUse),numOfPages,fileName);
+                                studentInfo.at(i)->printersUsed[fileName]=printerToUse; // updates map of printers used by students
                                 cout<<"Print job has been added to printer number "<<printerToUse<<endl;
-                                cout<<"Paper Left in printer "<<printerToUse<<": "<<nacPrinters.at(printerToUse-1).printerPageLimit<<endl;
+                                cout<<"Paper Left in printer "<<printerToUse<<": "<<nacPrinters.at(printerToUse).printerPageLimit<<endl;
                                 cout<<studentInfo.at(i)->name<<" has "<<studentInfo.at(i)->studentPageLimit<<" papers left."<<endl<<endl;
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
@@ -176,7 +181,7 @@ int main() {
                                 cin>>fileToCheckStatus;
                                 int printerForFileToCheckStatus = fileMap.find(fileToCheckStatus)->second;
 
-                                studentInfo.at(i)->checkPosition(nacPrinters.at(printerForFileToCheckStatus-1));
+                                studentInfo.at(i)->checkPosition(nacPrinters.at(printerForFileToCheckStatus));
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }
@@ -199,7 +204,7 @@ int main() {
                                 studentInfo.at(i)->printersUsed.erase(fileNameToCancel);
 
                                 // delete file from actual printer
-                                studentInfo.at(i)->cancelPrint(nacPrinters.at(printerForFileToCancel-1),fileNameToCancel);
+                                studentInfo.at(i)->cancelPrint(nacPrinters.at(printerForFileToCancel),fileNameToCancel);
 
 
                                 cout<<"Print job succesfully cancelled."<<endl<<endl;
@@ -306,6 +311,8 @@ int main() {
                         usleep(5000000);
                     }
                     else if (key4=="4"){
+                        admin a0;
+                        a0.PrintPerBar(nacPrinters);
                     	usleep(5000000);
                     }
                 } while (key4!="5");

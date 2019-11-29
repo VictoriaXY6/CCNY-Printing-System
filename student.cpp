@@ -38,8 +38,7 @@ void student::cancelPrint(printer &p, string fileName) {
 void student::checkPosition(printer &p) {
     node *curr = p.head;
     int index = 0, occurence = 1;
-
-    cout<<p.head->id; // HEAD IS NULL WHICH MEANS THAT LINKED LIST WAS NEVER CREATED?
+    // cout<<p.head->id;
 
     while (curr != nullptr) {
         if (curr->id == this->emplID) {

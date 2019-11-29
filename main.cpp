@@ -298,7 +298,8 @@ int main() {
                     cout<<"Press 1 if clear printer."<<endl;
                     cout<<"Press 2 to delete specific print job."<<endl;
                     cout<<"Press 3 to add paper to printer."<<endl;
-                    cout<<"Press 4 to log out."<<endl;
+                    cout<<"Press 4 to check printer status."<<endl; //
+                    cout<<"Press 5 to log out."<<endl;
                     cout<<"Enter option: ";
                     cin>>key4;
                     if (key4=="1") {
@@ -348,7 +349,11 @@ int main() {
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                         usleep(5000000);
                     }
-                } while (key4!="4");
+                    else if (key4=="4"){
+                    	PrintPerBar(nacPrinters);
+                    	usleep(5000000);
+                    }
+                } while (key4!="5");
             }
             else {
                 cout<<"Admin accessed denied."<<endl<<endl;

@@ -96,11 +96,12 @@ void PrintPerBar(vector<printer> List_Printer){
     string H = "\x1b[41m*\x1b[0m", V = "\x1b[41m*\x1b[0m", bar = "\x1b[44m#\x1b[0m"; //H is horizontal, V is vertical \x1b[41m—\x1b[0m
     string Bspace = "\x1b[44m \x1b[0m";
     int lenH = 130, lenV = 130;
-    for (int i = 0; i < 7; i++ ) percent.push_back(100 - (List_Printer[i].printerPageLimit*100)/500);
+    for (int i = 0; i < 7; i++ ) percent.push_back((List_Printer[i].length*100)/100);
+    //for (int i = 0; i < 7; i++) cout << List_Printer[i].length;  //check the length
     printHorizon(H, lenH);
     printVerti(V, lenV);
     for(int i = 0; i < 7; i++){
-        cout << V + "  P" << i << "  ";
+        cout << V + "  P" << i + 1 << "  ";
         for(int k = 0; k < percent[i]; k++){
             cout << bar;
         }

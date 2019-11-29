@@ -96,7 +96,7 @@ int main() {
     s4.print(nacPrinters[3],30,"victoria.txt");
     s5.print(nacPrinters[3],40,"greg.txt");
     
-    string key1, key2, key3, key4;
+    string nacKey, studentKey, printerStudKey, printerAdminKey;
     string name, username, password;
     int emplID;
 
@@ -111,8 +111,8 @@ int main() {
         cout<<"Press 2 if you are an admin."<<endl;
         cout<<"Press 3 to quit."<<endl;
         cout<<"Enter option: ";
-        cin>>key1;
-        if (key1=="1") {
+        cin>>nacKey;
+        if (nacKey=="1") {
             do {
                 system("clear");
                 cout<<"\x1b[46m Student Screen \x1b[0m"<<endl<<endl;
@@ -120,8 +120,8 @@ int main() {
                 cout<<"Press 2 if you are a new student."<<endl;
                 cout<<"Press 3 to go back."<<endl;
                 cout<<"Enter option: ";
-                cin>>key2;
-                if (key2=="1") {
+                cin>>studentKey;
+                if (studentKey=="1") {
                     system("clear");
                     bool studentInSystem=false;
                     cout<<"Enter username: ";
@@ -145,8 +145,8 @@ int main() {
                             cout<<"Press 3 to remove print job."<<endl;
                             cout<<"Press 4 to log out."<<endl;
                             cout<<"Enter option: ";
-                            cin>>key3;
-                            if (key3=="1") {
+                            cin>>printerStudKey;
+                            if (printerStudKey=="1") {
                                 system("clear");
                                 int fastestPos=fastestPrinter();
                                 cout<<"Enter file name: ";
@@ -166,7 +166,7 @@ int main() {
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }
-                            else if (key3=="2") {
+                            else if (printerStudKey=="2") {
                                 system("clear");
                                 map<string, int> fileMap = studentInfo.at(i)->printersUsed;  
                                 map<string, int>::iterator itr;
@@ -185,7 +185,7 @@ int main() {
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }
-                            else if (key3=="3") {
+                            else if (printerStudKey=="3") {
                                 system("clear");
                                 map<string, int> fileMap = studentInfo.at(i)->printersUsed;  
                                 map<string, int>::iterator itr;
@@ -211,7 +211,7 @@ int main() {
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }
-                        } while (key3!="4");
+                        } while (printerStudKey!="4");
                     }
                     else {
                         cout<<"Invalid username or password."<<endl<<endl;
@@ -219,7 +219,7 @@ int main() {
                         usleep(5000000); // pause for 5 sec
                     }
                 }
-                else if (key2=="2") {
+                else if (studentKey=="2") {
                     system("clear");
                     try{
                         cout<<"Enter emplID: ";
@@ -242,9 +242,9 @@ int main() {
                         cout << "Invaild input" << endl;
                     }
                 }
-            } while (key2!="3");
+            } while (studentKey!="3");
         }
-        else if (key1=="2") {
+        else if (nacKey=="2") {
             system("clear");
             bool studentInSystem=false;
             cout<<"Enter username: ";
@@ -262,8 +262,8 @@ int main() {
                     cout<<"Press 4 to check printer status."<<endl; //
                     cout<<"Press 5 to log out."<<endl;
                     cout<<"Enter option: ";
-                    cin>>key4;
-                    if (key4=="1") {
+                    cin>>printerAdminKey;
+                    if (printerAdminKey=="1") {
                         system("clear");
                         cout<<"Which printer do you want to clear: ";
                         int printerNumber;
@@ -274,7 +274,7 @@ int main() {
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                         usleep(5000000);
                     }
-                    else if (key4=="2") {
+                    else if (printerAdminKey=="2") {
                         system("clear");
                         cout<<"Enter student ID: ";
                         int studentID;
@@ -299,7 +299,7 @@ int main() {
                         usleep(5000000);
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                     }
-                    else if (key4=="3") {
+                    else if (printerAdminKey=="3") {
                         system("clear");
                         cout<<"Which printer do you want to add paper to: ";
                         int printerNumber;
@@ -310,12 +310,12 @@ int main() {
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                         usleep(5000000);
                     }
-                    else if (key4=="4"){
+                    else if (printerAdminKey=="4"){
                         admin a0;
                         a0.PrintPerBar(nacPrinters);
                     	usleep(5000000);
                     }
-                } while (key4!="5");
+                } while (printerAdminKey!="5");
             }
             else {
                 cout<<"Admin accessed denied."<<endl<<endl;
@@ -323,7 +323,7 @@ int main() {
                 usleep(5000000); // pause for 5 sec
             }
         }
-    } while (key1!="3");
+    } while (nacKey!="3");
 
     return 0;
 }

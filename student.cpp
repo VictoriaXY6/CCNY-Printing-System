@@ -5,8 +5,8 @@
 using namespace std;
 
 //constructor to initialize all the information about student
-student::student(int empldID, string name, string username, string password)
-        : emplID(empldID), name(name), username(username), password(password) {}
+student::student(int empldID, string name, string username, string password, int studentPageLimit)
+        : emplID(empldID), name(name), username(username), password(password), studentPageLimit(studentPageLimit) {}
 
 //pushes student's print job to whatever printer they select and prints n = printOrder pages
 void student::print(printer &p, int printOrder, string nameOfFile) {

@@ -4,10 +4,11 @@
 #include <unistd.h>
 #include <fstream>
 #include <thread>
+#include <map>
 #include "printer.h"
 #include "admin.h"
 #include "student.h"
-#include <map>
+#include "hashTable.h"
 using namespace std;
 
 printer p0, p1, p2, p3, p4, p5, p6;
@@ -26,30 +27,25 @@ int fastestPrinter() {
     return quickestPrinterPos;
 }
 
-student getStudentInfo(string userName, string password, bool &studentInSystem) {
-    string tempEmpl, tempName, tempUserName, tempPassword;
-    int tempEmplID;
-    fstream data("student-info.csv");
-
+hashTable createHashTable(string fileName) {
+    fstream data(fileName);
     if (!data.is_open())
-        cout << "FILE COULDN'T FILES" << endl;
-
+        cout<<"FILE COULDN'T OPEN"<<endl;
+    hashTable info;
+    string tempEmplID, name, username, password, tempStudentPageLimit;
+    int emplID, studentPageLimit;
     while (data.good()) {
-        getline(data, tempEmpl, ',');
-        getline(data, tempName, ',');
-        getline(data, tempUserName, ',');
-        getline(data, tempPassword, '\n');
-
-        if (tempUserName == userName && tempPassword == password) {
-            tempEmplID = stoi(tempEmpl);
-            student sTemp(tempEmplID, tempName, tempUserName, tempPassword);
-            studentInSystem = true;
-            return sTemp;
-        } else {
-            studentInSystem = false;
-            cout << "Record not found" << endl;
-        }
+        getline(data,tempEmplID,',');
+        getline(data,name,',');
+        getline(data,username,',');
+        getline(data,password,',');
+        getline(data,tempStudentPageLimit,'\n');
+        emplID=stoi(tempEmplID);
+        studentPageLimit=stoi(tempStudentPageLimit);
+        student sTemp(emplID, name, username, password, studentPageLimit);
+        info.addItem(sTemp);
     }
+    return info;
 }
 
 void dequeuePrintJobs(){
@@ -79,23 +75,18 @@ void dequeuePrintJobs(){
 
 
 int main() {
-    // test John in Terminal
+    hashTable studentInformation=createHashTable("student-info.csv");
     student s1(1111, "john","john","john");
-    studentInfo.push_back(&s1);
-
     student s2(2222, "bhavesh","bhavesh","bhavesh");
-    studentInfo.push_back(&s1);
     student s3(3333, "zeal","zeal","zeal");
-    studentInfo.push_back(&s1);
     student s4(4444, "victoria","victoria","victoria");
-    studentInfo.push_back(&s1);
     student s5(5555, "greg","greg","greg");
-    studentInfo.push_back(&s1);
-    s2.print(nacPrinters[3],10,"bhavesh.txt");
-    s3.print(nacPrinters[3],20,"zeal.txt");
-    s4.print(nacPrinters[3],30,"victoria.txt");
-    s5.print(nacPrinters[3],40,"greg.txt");
-    
+    studentInformation.addItem(s1);
+    studentInformation.addItem(s2);
+    studentInformation.addItem(s3);
+    studentInformation.addItem(s4);
+    studentInformation.addItem(s5);
+
     string nacKey, studentKey, printerStudKey, printerAdminKey;
     string name, username, password;
     int emplID;
@@ -123,23 +114,17 @@ int main() {
                 cin>>studentKey;
                 if (studentKey=="1") {
                     system("clear");
-                    bool studentInSystem=false;
                     cout<<"Enter username: ";
                     cin>>username;
                     cout<<"Enter password: ";
                     cin>>password;
-                    int i;
-                    for(i=0; i<studentInfo.size(); i++) { // authentication
-                        if (studentInfo.at(i)->username==username && studentInfo.at(i)->password==password) { // if user crendentials match, set studentInSystem to true
-                            studentInSystem=true;
-                            break;
-                        }
-                    }
+                    student sTemp;
+                    bool studentInSystem=studentInformation.getStudentInfo(username,password,sTemp);
                     if (studentInSystem==true) {
                         do {
                             system("clear");
                             cout<<"\x1b[45m Printing Screen \x1b[0m"<<endl<<endl;
-                            cout<<"Welcome "<<studentInfo.at(i)->name<<"!"<<endl;
+                            cout<<"Welcome "<<sTemp.name<<"!"<<endl;
                             cout<<"Press 1 to add print job."<<endl;
                             cout<<"Press 2 to check status of print job."<<endl;
                             cout<<"Press 3 to remove print job."<<endl;
@@ -158,22 +143,22 @@ int main() {
                                 cout<<"Enter printer you want to use (recommended printer is "<<fastestPos<<"): ";
                                 int printerToUse;
                                 cin>>printerToUse;
-                                studentInfo.at(i)->print(nacPrinters.at(printerToUse),numOfPages,fileName);
-                                studentInfo.at(i)->printersUsed[fileName]=printerToUse; // updates map of printers used by students
+                                sTemp.print(nacPrinters.at(printerToUse),numOfPages,fileName);
+                                sTemp.printersUsed[fileName]=printerToUse; // updates map of printers used by students
                                 cout<<"Print job has been added to printer number "<<printerToUse<<endl;
                                 cout<<"Paper Left in printer "<<printerToUse<<": "<<nacPrinters.at(printerToUse).printerPageLimit<<endl;
-                                cout<<studentInfo.at(i)->name<<" has "<<studentInfo.at(i)->studentPageLimit<<" papers left."<<endl<<endl;
+                                cout<<sTemp.name<<" has "<<sTemp.studentPageLimit<<" papers left."<<endl<<endl;
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }
                             else if (printerStudKey=="2") {
                                 system("clear");
-                                map<string, int> fileMap = studentInfo.at(i)->printersUsed;  
+                                map<string, int> fileMap = sTemp.printersUsed;
                                 map<string, int>::iterator itr;
 
-                                cout<<"Print jobs for "<<studentInfo.at(i)->name<<": "<<endl;
-                                for (itr = fileMap.begin(); itr != fileMap.end(); itr++) { 
-                                    cout<<itr->first<<endl; 
+                                cout<<"Print jobs for "<<sTemp.name<<": "<<endl;
+                                for (itr = fileMap.begin(); itr != fileMap.end(); itr++) {
+                                    cout<<itr->first<<endl;
                                 }
                                 cout<<"----------------------------------------------------"<<endl;
                                 cout<<"What file would you like to check status for: ";
@@ -181,18 +166,18 @@ int main() {
                                 cin>>fileToCheckStatus;
                                 int printerForFileToCheckStatus = fileMap.find(fileToCheckStatus)->second;
 
-                                studentInfo.at(i)->checkPosition(nacPrinters.at(printerForFileToCheckStatus));
+                                sTemp.checkPosition(nacPrinters.at(printerForFileToCheckStatus));
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }
                             else if (printerStudKey=="3") {
                                 system("clear");
-                                map<string, int> fileMap = studentInfo.at(i)->printersUsed;  
+                                map<string, int> fileMap = sTemp.printersUsed;
                                 map<string, int>::iterator itr;
 
-                                cout<<"Print jobs for "<<studentInfo.at(i)->name<<": "<<endl;
-                                for (itr = fileMap.begin(); itr != fileMap.end(); itr++) { 
-                                    cout<<itr->first<<endl; 
+                                cout<<"Print jobs for "<<sTemp.name<<": "<<endl;
+                                for (itr = fileMap.begin(); itr != fileMap.end(); itr++) {
+                                    cout<<itr->first<<endl;
                                 }
                                 cout<<"----------------------------------------------------"<<endl;
                                 cout<<"What file would you like to cancel printing: ";
@@ -201,10 +186,10 @@ int main() {
                                 int printerForFileToCancel = fileMap.find(fileNameToCancel)->second;
 
                                 // delete file from map that tracks files
-                                studentInfo.at(i)->printersUsed.erase(fileNameToCancel);
+                                sTemp.printersUsed.erase(fileNameToCancel);
 
                                 // delete file from actual printer
-                                studentInfo.at(i)->cancelPrint(nacPrinters.at(printerForFileToCancel),fileNameToCancel);
+                                sTemp.cancelPrint(nacPrinters.at(printerForFileToCancel),fileNameToCancel);
 
 
                                 cout<<"Print job succesfully cancelled."<<endl<<endl;
@@ -232,8 +217,8 @@ int main() {
                         cin>>username;
                         cout<<"Enter password: ";
                         cin>>password;
-                        student *newStudent = new student(emplID,name,username,password);
-                        studentInfo.push_back(newStudent);
+                        student newStudent(emplID,name,username,password);
+                        studentInformation.addItem(newStudent);
                         cout<<"New Account Created for "<<name<<"!"<<endl<<endl;
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                         usleep(5000000); // pause for 5 sec
@@ -313,7 +298,7 @@ int main() {
                     else if (printerAdminKey=="4"){
                         admin a0;
                         a0.PrintPerBar(nacPrinters);
-                    	usleep(5000000);
+                        usleep(5000000);
                     }
                 } while (printerAdminKey!="5");
             }

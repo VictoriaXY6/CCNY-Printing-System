@@ -12,7 +12,6 @@
 using namespace std;
 
 printer p0, p1, p2, p3, p4, p5, p6;
-vector<student*> studentInfo;
 vector<printer> nacPrinters = {p0, p1, p2, p3, p4, p5, p6};
 
 int fastestPrinter() {

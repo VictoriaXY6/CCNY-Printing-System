@@ -9,7 +9,7 @@ class admin {
 public:
 
 	void clearPrinter(printer &p);
-	void deletePrintJob(printer &p, student *s);
+	void deletePrintJob(printer &p, student s);
     void addpaper(printer &p);
     void PrintPerBar(vector<printer> List_Printer);
     void printHorizon(string a, int len);

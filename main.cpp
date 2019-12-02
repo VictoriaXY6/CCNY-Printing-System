@@ -260,22 +260,16 @@ int main() {
                     }
                     else if (printerAdminKey=="2") {
                         system("clear");
-                        cout<<"Enter student ID: ";
-                        int studentID;
-                        cin>>studentID;
-                        bool studentIdExists=false;
-                        int i;
-                        for (i = 0; i < studentInfo.size(); i++) {
-                            if (studentInfo.at(i)->emplID==studentID) {
-                                studentIdExists=true;
-                                break;
-                            }
-                        }
+                        cout<<"Enter student username: ";
+                        string username;
+                        cin>>username;
+                        student sTemp;
+                        bool studentIdExists=studentInformation.getStudentInfoByUsername(username, sTemp);
                         if (studentIdExists==true) {
                             admin a0;
-                            int printerStudentPicked = studentInfo.at(i)->printerPicked;
-                            a0.deletePrintJob(nacPrinters.at(printerStudentPicked),studentInfo.at(i));
-                            cout<<"Student "<<studentInfo.at(i)->emplID<<"'s print job has been removed."<<endl<<endl;
+                            int printerStudentPicked = sTemp.printerPicked;
+                            a0.deletePrintJob(nacPrinters.at(printerStudentPicked),sTemp);
+                            cout<<"Student "<<sTemp.emplID<<"'s print job has been removed."<<endl<<endl;
                         }
                         else {
                             cout<<"Student not found."<<endl<<endl;

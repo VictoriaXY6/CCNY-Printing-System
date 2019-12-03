@@ -241,7 +241,7 @@ int main() {
                     system("clear");
                     cout<<"\x1b[41m Admin Screen \x1b[0m"<<endl<<endl;
                     cout<<"Welcome Admin!"<<endl;
-                    cout<<"Press 1 if clear printer."<<endl;
+                    cout<<"Press 1 to clear printer."<<endl;
                     cout<<"Press 2 to delete specific print job."<<endl;
                     cout<<"Press 3 to add paper to printer."<<endl;
                     cout<<"Press 4 to check printer status."<<endl; //

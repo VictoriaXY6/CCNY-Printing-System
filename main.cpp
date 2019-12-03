@@ -52,6 +52,7 @@ void dequeuePrintJobs(){
         while(nacPrinters[0].length > 0 || nacPrinters[1].length > 0 || nacPrinters[2].length > 0 || nacPrinters[3].length > 0 ||
               nacPrinters[4].length > 0 || nacPrinters[5].length > 0 || nacPrinters[6].length > 0){
 
+            usleep(30000000); // go through the loop every 30 seconds until all queues are empty
             if(nacPrinters[0].length > 0)
                 nacPrinters[0].dequeue();
             if(nacPrinters[1].length > 0)
@@ -66,7 +67,6 @@ void dequeuePrintJobs(){
                 nacPrinters[5].dequeue();
             if(nacPrinters[6].length > 0)
                 nacPrinters[6].dequeue();
-            usleep(30000000); // go through the loop every 30 seconds until all queues are empty
         }
     }
 }
@@ -147,6 +147,7 @@ int main() {
                                 cout<<"Print job has been added to printer number "<<printerToUse<<endl;
                                 cout<<"Paper Left in printer "<<printerToUse<<": "<<nacPrinters.at(printerToUse).printerPageLimit<<endl;
                                 cout<<sTemp.name<<" has "<<sTemp.studentPageLimit<<" papers left."<<endl<<endl;
+                                nacPrinters[printerToUse].display();
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }

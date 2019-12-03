@@ -55,7 +55,7 @@ void admin:: printVerti(string b, int len){
 
 void admin:: PrintPerBar(vector<printer> List_Printer){
     vector<int> percent;  //store the percentge of how many paper have been used
-    string H = "\x1b[41m*\x1b[0m", V = "\x1b[41m*\x1b[0m", bar = "\x1b[44m#\x1b[0m"; //H is horizontal, V is vertical \x1b[41m—\x1b[0m
+    string H = "\x1b[41m*\x1b[0m", V = "\x1b[41m*\x1b[0m", bar = "\x1b[44m🀫\x1b[0m"; //H is horizontal, V is vertical \x1b[41m—\x1b[0m
     string Bspace = "\x1b[44m \x1b[0m";
     int lenH = 130, lenV = 130;
     for (int i = 0; i < 7; i++ ) percent.push_back((List_Printer[i].length*100)/100);

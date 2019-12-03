@@ -31,7 +31,7 @@ void student::cancelPrint(printer &p, string fileName) {
     studentPageLimit += temp->printOrder;
     p.printerPageLimit += temp->printOrder;
     prev->next = curr->next;
-    delete(temp);
+    //delete(temp);
 }
 
 //checks what position the student is in the queue

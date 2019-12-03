@@ -142,8 +142,10 @@ int main() {
                                 cout<<"Enter printer you want to use (recommended printer is "<<fastestPos<<"): ";
                                 int printerToUse;
                                 cin>>printerToUse;
+
                                 sTemp.print(nacPrinters.at(printerToUse),numOfPages,fileName);
                                 sTemp.printersUsed[fileName]=printerToUse; // updates map of printers used by students
+
                                 cout<<"Print job has been added to printer number "<<printerToUse<<endl;
                                 cout<<"Paper Left in printer "<<printerToUse<<": "<<nacPrinters.at(printerToUse).printerPageLimit<<endl;
                                 cout<<sTemp.name<<" has "<<sTemp.studentPageLimit<<" papers left."<<endl<<endl;
@@ -164,9 +166,21 @@ int main() {
                                 cout<<"What file would you like to check status for: ";
                                 string fileToCheckStatus;
                                 cin>>fileToCheckStatus;
-                                int printerForFileToCheckStatus = fileMap.find(fileToCheckStatus)->second;
 
-                                sTemp.checkPosition(nacPrinters.at(printerForFileToCheckStatus));
+                                map<string, int>::iterator itr2 = fileMap.find(fileToCheckStatus); 
+                                if(itr2 == fileMap.end()) // if file not in map 
+                                    cout<<"Print job not found"<<endl<<endl;
+                                else {
+                                    int printerForFileToCheckStatus = fileMap.find(fileToCheckStatus)->second;
+
+                                    if (nacPrinters[printerForFileToCheckStatus].isStillInQueue(fileToCheckStatus)==true) {
+                                        sTemp.checkPosition(nacPrinters.at(printerForFileToCheckStatus));
+                                    }
+                                    else {
+                                        sTemp.printersUsed.erase(fileToCheckStatus); // if file not in queue but still in map, then delete from map
+                                        cout<<"Print job has already been executed."<<endl<<endl;
+                                    }
+                                }
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }
@@ -183,16 +197,24 @@ int main() {
                                 cout<<"What file would you like to cancel printing: ";
                                 string fileNameToCancel;
                                 cin>>fileNameToCancel;
-                                int printerForFileToCancel = fileMap.find(fileNameToCancel)->second;
 
-                                // delete file from map that tracks files
-                                sTemp.printersUsed.erase(fileNameToCancel);
+                                map<string, int>::iterator itr2 = fileMap.find(fileNameToCancel); 
+                                if(itr2 == fileMap.end()) // if file not in map
+                                    cout<<"Print job not found"<<endl<<endl;
+                                else {
+                                    int printerForFileToCancel = fileMap.find(fileNameToCancel)->second;
 
-                                // delete file from actual printer
-                                sTemp.cancelPrint(nacPrinters.at(printerForFileToCancel),fileNameToCancel);
-
-
-                                cout<<"Print job succesfully cancelled."<<endl<<endl;
+                                    if (nacPrinters[printerForFileToCancel].isStillInQueue(fileNameToCancel)==true) {
+                                        sTemp.cancelPrint(nacPrinters.at(printerForFileToCancel),fileNameToCancel); // delete file from actual printer
+                                        sTemp.printersUsed.erase(fileNameToCancel); // delete file from map that tracks files
+                                        cout<<"Print job succesfully cancelled."<<endl<<endl;
+                                    }
+                                    else {
+                                        sTemp.printersUsed.erase(fileNameToCancel); // if file not in queue but still in map, then delete from map
+                                        cout<<"Print job has already been executed."<<endl<<endl;
+                                    }
+                                }
+                                    
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }
@@ -267,10 +289,34 @@ int main() {
                         student sTemp;
                         bool studentIdExists=studentInformation.getStudentInfoByUsername(username, sTemp);
                         if (studentIdExists==true) {
-                            admin a0;
-                            int printerStudentPicked = sTemp.printerPicked;
-                            a0.deletePrintJob(nacPrinters.at(printerStudentPicked),sTemp);
-                            cout<<"Student "<<sTemp.emplID<<"'s print job has been removed."<<endl<<endl;
+                            map<string, int> fileMap = sTemp.printersUsed;
+                            map<string, int>::iterator itr;
+
+                            cout<<"Print jobs for "<<sTemp.name<<": "<<endl;
+                            for (itr = fileMap.begin(); itr != fileMap.end(); itr++) {
+                                cout<<itr->first<<endl;
+                            }
+                            cout<<"----------------------------------------------------"<<endl;
+                            cout<<"What file would you like to cancel printing: ";
+                            string fileNameToCancel;
+                            cin>>fileNameToCancel;
+
+                            map<string, int>::iterator itr2 = fileMap.find(fileNameToCancel); 
+                            if(itr2 == fileMap.end()) // if file not in map
+                                cout<<"Print job not found"<<endl<<endl;
+                            else {
+                                int printerForFileToCancel = fileMap.find(fileNameToCancel)->second;
+
+                                if (nacPrinters[printerForFileToCancel].isStillInQueue(fileNameToCancel)==true) {
+                                    sTemp.cancelPrint(nacPrinters.at(printerForFileToCancel),fileNameToCancel); // delete file from actual printer
+                                    sTemp.printersUsed.erase(fileNameToCancel); // delete file from map that tracks files
+                                    cout<<"Student "<<sTemp.emplID<<"'s print job has been removed."<<endl<<endl;
+                                }
+                                else {
+                                    sTemp.printersUsed.erase(fileNameToCancel); // if file not in queue but still in map, then delete from map
+                                    cout<<"Print job has already been executed."<<endl<<endl;
+                                }
+                            }              
                         }
                         else {
                             cout<<"Student not found."<<endl<<endl;

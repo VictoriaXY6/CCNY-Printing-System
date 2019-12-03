@@ -41,7 +41,8 @@ void printer::display() {
     node *curr = head;
     if (head == NULL) {
         cout << "No print jobs in printer" << endl;
-    } else {
+    } 
+    else {
         while(curr != NULL) {
             cout<<curr->id << " ";
             curr = curr->next;
@@ -49,3 +50,20 @@ void printer::display() {
         cout << endl;
     }
 }
+
+bool printer::isStillInQueue(string nameOfFile) {
+    node *curr = head;
+    bool isAvailable=false;
+    if (head != NULL) {
+        while(curr != NULL) {
+            if (curr->fileName==nameOfFile) {
+                isAvailable=true;
+                break;
+            }
+            curr = curr->next;
+        }
+    }
+    
+    return isAvailable;
+}
+

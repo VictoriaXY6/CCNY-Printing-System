@@ -26,6 +26,7 @@ public:
     void enqueue(int userID, int printOrder, string nameOfFile);
     int dequeue();
     void display();
+    bool isStillInQueue(string nameOfFile);
 };
 
 #endif //CCNY_PRINTING_SYSTEM_PRINTER_H

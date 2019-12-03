@@ -290,8 +290,16 @@ int main() {
                         usleep(5000000);
                     }
                     else if (printerAdminKey=="4"){
+                        system("clear");
                         admin a0;
-                        a0.PrintPerBar(nacPrinters);
+                        while(true) {
+                            system("clear");
+                            a0.PrintPerBar(nacPrinters);
+                            char c = cin.get();
+                            if (c==27)
+                                break;
+                        }
+
                         usleep(5000000);
                     }
                 } while (printerAdminKey!="5");

@@ -90,6 +90,10 @@ int main() {
     string name, username, password;
     int emplID;
 
+    for (int i = 0; i < 35; ++i) {
+        s1.print(nacPrinters[rand() % 7], 1, "test");
+    }
+    
     thread thread(dequeuePrintJobs);
     thread.detach();
 

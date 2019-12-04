@@ -52,7 +52,7 @@ void dequeuePrintJobs(){
         while(nacPrinters[0].length > 0 || nacPrinters[1].length > 0 || nacPrinters[2].length > 0 || nacPrinters[3].length > 0 ||
               nacPrinters[4].length > 0 || nacPrinters[5].length > 0 || nacPrinters[6].length > 0){
 
-            usleep(30000000); // go through the loop every 30 seconds until all queues are empty
+            usleep(60000000); // go through the loop every 30 seconds until all queues are empty
             if(nacPrinters[0].length > 0)
                 nacPrinters[0].dequeue();
             if(nacPrinters[1].length > 0)
@@ -94,8 +94,8 @@ int main() {
         s1.print(nacPrinters[rand() % 7], 1, "test");
     }
     
-    thread thread(dequeuePrintJobs);
-    thread.detach();
+//    thread thread(dequeuePrintJobs);
+//    thread.detach();
 
     do {
         system("clear");
@@ -153,7 +153,6 @@ int main() {
                                 cout<<"Print job has been added to printer number "<<printerToUse<<endl;
                                 cout<<"Paper Left in printer "<<printerToUse<<": "<<nacPrinters.at(printerToUse).printerPageLimit<<endl;
                                 cout<<sTemp.name<<" has "<<sTemp.studentPageLimit<<" papers left."<<endl<<endl;
-                                nacPrinters[printerToUse].display();
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }
@@ -263,6 +262,7 @@ int main() {
             cout<<"Enter password: ";
             cin>>password;
             if (username=="admin" && password=="admin") {
+                admin a0;
                 do {
                     system("clear");
                     cout<<"\x1b[41m Admin Screen \x1b[0m"<<endl<<endl;
@@ -279,61 +279,16 @@ int main() {
                         cout<<"Which printer do you want to clear: ";
                         int printerNumber;
                         cin>>printerNumber;
-                        admin a0;
                         a0.clearPrinter(nacPrinters.at(printerNumber));
                         cout<<"Printer "<<printerNumber<<" has been cleared."<<endl<<endl;
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                         usleep(5000000);
-                    }
-                    else if (printerAdminKey=="2") {
-                        system("clear");
-                        cout<<"Enter student username: ";
-                        string username;
-                        cin>>username;
-                        student sTemp;
-                        bool studentIdExists=studentInformation.getStudentInfoByUsername(username, sTemp);
-                        if (studentIdExists==true) {
-                            map<string, int> fileMap = sTemp.printersUsed;
-                            map<string, int>::iterator itr;
-
-                            cout<<"Print jobs for "<<sTemp.name<<": "<<endl;
-                            for (itr = fileMap.begin(); itr != fileMap.end(); itr++) {
-                                cout<<itr->first<<endl;
-                            }
-                            cout<<"----------------------------------------------------"<<endl;
-                            cout<<"What file would you like to cancel printing: ";
-                            string fileNameToCancel;
-                            cin>>fileNameToCancel;
-
-                            map<string, int>::iterator itr2 = fileMap.find(fileNameToCancel); 
-                            if(itr2 == fileMap.end()) // if file not in map
-                                cout<<"Print job not found"<<endl<<endl;
-                            else {
-                                int printerForFileToCancel = fileMap.find(fileNameToCancel)->second;
-
-                                if (nacPrinters[printerForFileToCancel].isStillInQueue(fileNameToCancel)==true) {
-                                    sTemp.cancelPrint(nacPrinters.at(printerForFileToCancel),fileNameToCancel); // delete file from actual printer
-                                    sTemp.printersUsed.erase(fileNameToCancel); // delete file from map that tracks files
-                                    cout<<"Student "<<sTemp.emplID<<"'s print job has been removed."<<endl<<endl;
-                                }
-                                else {
-                                    sTemp.printersUsed.erase(fileNameToCancel); // if file not in queue but still in map, then delete from map
-                                    cout<<"Print job has already been executed."<<endl<<endl;
-                                }
-                            }              
-                        }
-                        else {
-                            cout<<"Student not found."<<endl<<endl;
-                        }
-                        usleep(5000000);
-                        cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                     }
                     else if (printerAdminKey=="3") {
                         system("clear");
                         cout<<"Which printer do you want to add paper to: ";
                         int printerNumber;
                         cin>>printerNumber;
-                        admin a0;
                         a0.addpaper(nacPrinters.at(printerNumber));
                         cout<<"Printer "<<printerNumber<<" has been restocked."<<endl<<endl;
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
@@ -341,7 +296,6 @@ int main() {
                     }
                     else if (printerAdminKey=="4"){
                         system("clear");
-                        admin a0;
                         while(true) {
                             system("clear");
                             a0.PrintPerBar(nacPrinters);

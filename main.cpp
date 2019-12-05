@@ -17,10 +17,10 @@ vector<printer> nacPrinters = {p0, p1, p2, p3, p4, p5, p6};
 
 int fastestPrinter() {
     int quickestPrinterPos = 0;
-    printer quickestPrinter = nacPrinters.at(0);
+    printer quickestPrinter = nacPrinters[0];
     for (int i = 0; i < nacPrinters.size(); i++) {
-        if (quickestPrinter.length > nacPrinters.at(i).length) {
-            quickestPrinter = nacPrinters.at(i);
+        if (quickestPrinter.length > nacPrinters[i].length) {
+            quickestPrinter = nacPrinters[i];
             quickestPrinterPos = i;
         }
     }
@@ -149,7 +149,7 @@ int main() {
                                 int printerToUse;
                                 cin>>printerToUse;
 
-                                sTemp.print(nacPrinters.at(printerToUse),numOfPages,fileName);
+                                sTemp.print(nacPrinters[printerToUse],numOfPages,fileName);
                                 sTemp.printersUsed[fileName]=printerToUse; // updates map of printers used by students
 
                                 cout<<"Print job has been added to printer number \x1b[36m"<<printerToUse<<"\x1b[0m."<<endl;
@@ -179,7 +179,7 @@ int main() {
                                     int printerForFileToCheckStatus = fileMap.find(fileToCheckStatus)->second;
 
                                     if (nacPrinters[printerForFileToCheckStatus].isStillInQueue(fileToCheckStatus)==true) {
-                                        sTemp.checkPosition(nacPrinters.at(printerForFileToCheckStatus),fileToCheckStatus);
+                                        sTemp.checkPosition(nacPrinters[printerForFileToCheckStatus],fileToCheckStatus);
                                     }
                                     else {
                                         sTemp.printersUsed.erase(fileToCheckStatus); // if file not in queue but still in map, then delete from map
@@ -210,7 +210,7 @@ int main() {
                                     int printerForFileToCancel = fileMap.find(fileNameToCancel)->second;
 
                                     if (nacPrinters[printerForFileToCancel].isStillInQueue(fileNameToCancel)==true) {
-                                        sTemp.cancelPrint(nacPrinters.at(printerForFileToCancel),fileNameToCancel); // delete file from actual printer
+                                        sTemp.cancelPrint(nacPrinters[printerForFileToCancel],fileNameToCancel); // delete file from actual printer
                                         sTemp.printersUsed.erase(fileNameToCancel); // delete file from map that tracks files
                                         cout<<"\x1b[32mPrint job succesfully cancelled. ✅\x1b[0m"<<endl<<endl;
                                     }
@@ -280,7 +280,7 @@ int main() {
                         cout<<"Which printer do you want to clear: ";
                         int printerNumber;
                         cin>>printerNumber;
-                        a0.clearPrinter(nacPrinters.at(printerNumber));
+                        a0.clearPrinter(nacPrinters[printerNumber]);
                         cout<<"\x1b[32mAll print jobs in printer "<<printerNumber<<" have been cleared. ✅\x1b[0m"<<endl<<endl;
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                         usleep(3000000);
@@ -290,7 +290,7 @@ int main() {
                         cout<<"Which printer do you want to add paper to: ";
                         int printerNumber;
                         cin>>printerNumber;
-                        a0.addpaper(nacPrinters.at(printerNumber));
+                        a0.addpaper(nacPrinters[printerNumber]);
                         cout<<"\x1b[32mPrinter "<<printerNumber<<" has been restocked. ✅\x1b[0m"<<endl<<endl;
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                         usleep(3000000);

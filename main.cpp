@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <unistd.h>
+#include <stdio.h>
 #include <fstream>
 #include <thread>
 #include <map>
@@ -87,7 +88,8 @@ int main() {
     studentInformation.addItem(s5);
 
     string nacKey, studentKey, printerStudKey, printerAdminKey;
-    string name, username, password;
+    string name, username;
+    char *password;
     int emplID;
 
     for (int i = 0; i < 35; ++i) {
@@ -120,8 +122,7 @@ int main() {
                     cout<<"\x1b[46m Student Login \x1b[0m"<<endl<<endl;
                     cout<<"Enter username: ";
                     cin>>username;
-                    cout<<"Enter password: ";
-                    cin>>password;
+                    password = getpass("Enter password: ");
                     student sTemp;
                     bool studentInSystem=studentInformation.getStudentInfo(username,password,sTemp);
                     if (studentInSystem==true) {
@@ -261,9 +262,8 @@ int main() {
             bool studentInSystem=false;
             cout<<"Enter username: ";
             cin>>username;
-            cout<<"Enter password: ";
-            cin>>password;
-            if (username=="admin" && password=="admin") {
+            password = getpass("Enter password: ");
+            if (username=="admin" && strcmp(password,"admin")==0) {
                 admin a0;
                 do {
                     system("clear");

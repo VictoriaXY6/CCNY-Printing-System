@@ -20,7 +20,7 @@ public:
     student(int empldID=0, string name="", string username="", string password="", int studentPageLimit=1000);
     void print(printer &p, int printOrder, string nameOfFile);
     void cancelPrint(printer &p, string fileName);
-    void checkPosition(printer &p);
+    void checkPosition(printer &p, string fileName);
 };
 
 

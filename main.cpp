@@ -177,7 +177,7 @@ int main() {
                                     int printerForFileToCheckStatus = fileMap.find(fileToCheckStatus)->second;
 
                                     if (nacPrinters[printerForFileToCheckStatus].isStillInQueue(fileToCheckStatus)==true) {
-                                        sTemp.checkPosition(nacPrinters.at(printerForFileToCheckStatus));
+                                        sTemp.checkPosition(nacPrinters.at(printerForFileToCheckStatus),fileToCheckStatus);
                                     }
                                     else {
                                         sTemp.printersUsed.erase(fileToCheckStatus); // if file not in queue but still in map, then delete from map

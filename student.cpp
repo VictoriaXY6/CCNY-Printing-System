@@ -35,15 +35,14 @@ void student::cancelPrint(printer &p, string fileName) {
 }
 
 //checks what position the student is in the queue
-void student::checkPosition(printer &p) {
+void student::checkPosition(printer &p, string fileName) {
     node *curr = p.head;
-    int index = 0, occurence = 1;
+    int index = 0;
     // cout<<p.head->id;
 
     while (curr != nullptr) {
-        if (curr->id == this->emplID) {
-            cout << "Print job " << occurence << " has " << index << " jobs ahead." << endl;
-            occurence++;
+        if (curr->id == this->emplID && curr->fileName == fileName) {
+            cout << fileName << " has " << index << " jobs ahead of it." << endl;
         }
         index++;
         curr = curr->next;

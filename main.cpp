@@ -52,7 +52,7 @@ void dequeuePrintJobs(){
         while(nacPrinters[0].length > 0 || nacPrinters[1].length > 0 || nacPrinters[2].length > 0 || nacPrinters[3].length > 0 ||
               nacPrinters[4].length > 0 || nacPrinters[5].length > 0 || nacPrinters[6].length > 0){
 
-            usleep(60000000); // go through the loop every 30 seconds until all queues are empty
+            usleep(30000000); // go through the loop every 30 seconds until all queues are empty
             if(nacPrinters[0].length > 0)
                 nacPrinters[0].dequeue();
             if(nacPrinters[1].length > 0)
@@ -101,22 +101,23 @@ int main() {
         system("clear");
         cout<<"\x1b[42m Home Screen \x1b[0m"<<endl<<endl;
         cout<<"Welcome to the Nac Printing System!"<<endl;
-        cout<<"Press 1 if you are a student."<<endl;
-        cout<<"Press 2 if you are an admin."<<endl;
-        cout<<"Press 3 to quit."<<endl;
+        cout<<"[1] \x1b[36mStudent\x1b[0m"<<endl;
+        cout<<"[2] \x1b[35mAdmin\x1b[0m"<<endl;
+        cout<<"[3] Quit"<<endl;
         cout<<"Enter option: ";
         cin>>nacKey;
         if (nacKey=="1") {
             do {
                 system("clear");
-                cout<<"\x1b[46m Student Screen \x1b[0m"<<endl<<endl;
-                cout<<"Press 1 if you are an existing student."<<endl;
-                cout<<"Press 2 if you are a new student."<<endl;
-                cout<<"Press 3 to go back."<<endl;
+                cout<<"\x1b[46m Student Page \x1b[0m"<<endl<<endl;
+                cout<<"[1] Existing Student"<<endl;
+                cout<<"[2] New Student"<<endl;
+                cout<<"[3] Go Back"<<endl;
                 cout<<"Enter option: ";
                 cin>>studentKey;
                 if (studentKey=="1") {
                     system("clear");
+                    cout<<"\x1b[46m Student Login \x1b[0m"<<endl<<endl;
                     cout<<"Enter username: ";
                     cin>>username;
                     cout<<"Enter password: ";
@@ -126,12 +127,12 @@ int main() {
                     if (studentInSystem==true) {
                         do {
                             system("clear");
-                            cout<<"\x1b[45m Printing Screen \x1b[0m"<<endl<<endl;
-                            cout<<"Welcome "<<sTemp.name<<"!"<<endl;
-                            cout<<"Press 1 to add print job."<<endl;
-                            cout<<"Press 2 to check status of print job."<<endl;
-                            cout<<"Press 3 to remove print job."<<endl;
-                            cout<<"Press 4 to log out."<<endl;
+                            cout<<"\x1b[46m Student Printing Screen \x1b[0m"<<endl<<endl;
+                            cout<<"Welcome \x1b[36m"<<sTemp.name<<"\x1b[0m!"<<endl;
+                            cout<<"[1] Add Print Job"<<endl;
+                            cout<<"[2] Check Status of Print Job"<<endl;
+                            cout<<"[3] Remove Print Job."<<endl;
+                            cout<<"[4] Log Out"<<endl;
                             cout<<"Enter option: ";
                             cin>>printerStudKey;
                             if (printerStudKey=="1") {
@@ -150,9 +151,9 @@ int main() {
                                 sTemp.print(nacPrinters.at(printerToUse),numOfPages,fileName);
                                 sTemp.printersUsed[fileName]=printerToUse; // updates map of printers used by students
 
-                                cout<<"Print job has been added to printer number "<<printerToUse<<endl;
-                                cout<<"Paper Left in printer "<<printerToUse<<": "<<nacPrinters.at(printerToUse).printerPageLimit<<endl;
-                                cout<<sTemp.name<<" has "<<sTemp.studentPageLimit<<" papers left."<<endl<<endl;
+                                cout<<"Print job has been added to printer number \x1b[36m"<<printerToUse<<"\x1b[0m."<<endl;
+                                cout<<"Paper Left in printer "<<printerToUse<<": \x1b[36m"<<nacPrinters.at(printerToUse).printerPageLimit<<"\x1b[0m."<<endl;
+                                cout<<sTemp.name<<" has \x1b[36m"<<sTemp.studentPageLimit<<"\x1b[0m papers left."<<endl<<endl;
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
                                 usleep(5000000);
                             }
@@ -172,7 +173,7 @@ int main() {
 
                                 map<string, int>::iterator itr2 = fileMap.find(fileToCheckStatus); 
                                 if(itr2 == fileMap.end()) // if file not in map 
-                                    cout<<"Print job not found"<<endl<<endl;
+                                    cout<<"\x1b[31mPrint job not found\x1b[0m"<<endl<<endl;
                                 else {
                                     int printerForFileToCheckStatus = fileMap.find(fileToCheckStatus)->second;
 
@@ -181,11 +182,11 @@ int main() {
                                     }
                                     else {
                                         sTemp.printersUsed.erase(fileToCheckStatus); // if file not in queue but still in map, then delete from map
-                                        cout<<"Print job has already been executed."<<endl<<endl;
+                                        cout<<"\x1b[31mPrint job has already been executed.\x1b[0m"<<endl<<endl;
                                     }
                                 }
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
-                                usleep(5000000);
+                                usleep(3000000);
                             }
                             else if (printerStudKey=="3") {
                                 system("clear");
@@ -203,30 +204,30 @@ int main() {
 
                                 map<string, int>::iterator itr2 = fileMap.find(fileNameToCancel); 
                                 if(itr2 == fileMap.end()) // if file not in map
-                                    cout<<"Print job not found"<<endl<<endl;
+                                    cout<<"\x1b[31mPrint job not found\x1b[0m"<<endl<<endl;
                                 else {
                                     int printerForFileToCancel = fileMap.find(fileNameToCancel)->second;
 
                                     if (nacPrinters[printerForFileToCancel].isStillInQueue(fileNameToCancel)==true) {
                                         sTemp.cancelPrint(nacPrinters.at(printerForFileToCancel),fileNameToCancel); // delete file from actual printer
                                         sTemp.printersUsed.erase(fileNameToCancel); // delete file from map that tracks files
-                                        cout<<"Print job succesfully cancelled."<<endl<<endl;
+                                        cout<<"\x1b[32mPrint job succesfully cancelled. ✅\x1b[0m"<<endl<<endl;
                                     }
                                     else {
                                         sTemp.printersUsed.erase(fileNameToCancel); // if file not in queue but still in map, then delete from map
-                                        cout<<"Print job has already been executed."<<endl<<endl;
+                                        cout<<"\x1b[31mPrint job has already been executed.\x1b[0m"<<endl<<endl;
                                     }
                                 }
                                     
                                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
-                                usleep(5000000);
+                                usleep(3000000);
                             }
                         } while (printerStudKey!="4");
                     }
                     else {
-                        cout<<"Invalid username or password."<<endl<<endl;
+                        cout<<"\x1b[31mInvalid username or password. ❌\x1b[0m"<<endl<<endl;
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
-                        usleep(5000000); // pause for 5 sec
+                        usleep(3000000); // pause for 3 sec
                     }
                 }
                 else if (studentKey=="2") {
@@ -244,9 +245,9 @@ int main() {
                         cin>>password;
                         student newStudent(emplID,name,username,password);
                         studentInformation.addItem(newStudent);
-                        cout<<"New Account Created for "<<name<<"!"<<endl<<endl;
+                        cout<<"\x1b[32mNew Account Created for "<<name<<"!\x1b[0m"<<endl<<endl;
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
-                        usleep(5000000); // pause for 5 sec
+                        usleep(3000000); // pause for 5 sec
                     }
                     catch (string param){
                         cout << "Invaild input" << endl;
@@ -256,6 +257,7 @@ int main() {
         }
         else if (nacKey=="2") {
             system("clear");
+            cout<<"\x1b[45m Admin Login \x1b[0m"<<endl<<endl;
             bool studentInSystem=false;
             cout<<"Enter username: ";
             cin>>username;
@@ -265,13 +267,12 @@ int main() {
                 admin a0;
                 do {
                     system("clear");
-                    cout<<"\x1b[41m Admin Screen \x1b[0m"<<endl<<endl;
+                    cout<<"\x1b[45m Admin Page \x1b[0m"<<endl<<endl;
                     cout<<"Welcome Admin!"<<endl;
-                    cout<<"Press 1 to clear printer."<<endl;
-                    cout<<"Press 2 to delete specific print job."<<endl;
-                    cout<<"Press 3 to add paper to printer."<<endl;
-                    cout<<"Press 4 to check printer status."<<endl; //
-                    cout<<"Press 5 to log out."<<endl;
+                    cout<<"[1] Clear Printer"<<endl;
+                    cout<<"[2] Add Paper to Printer"<<endl;
+                    cout<<"[3] Check Printer Status"<<endl;
+                    cout<<"[4] Log Out"<<endl;
                     cout<<"Enter option: ";
                     cin>>printerAdminKey;
                     if (printerAdminKey=="1") {
@@ -280,21 +281,21 @@ int main() {
                         int printerNumber;
                         cin>>printerNumber;
                         a0.clearPrinter(nacPrinters.at(printerNumber));
-                        cout<<"Printer "<<printerNumber<<" has been cleared."<<endl<<endl;
+                        cout<<"\x1b[32mAll print jobs in printer "<<printerNumber<<" have been cleared. ✅\x1b[0m"<<endl<<endl;
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
-                        usleep(5000000);
+                        usleep(3000000);
                     }
-                    else if (printerAdminKey=="3") {
+                    else if (printerAdminKey=="2") {
                         system("clear");
                         cout<<"Which printer do you want to add paper to: ";
                         int printerNumber;
                         cin>>printerNumber;
                         a0.addpaper(nacPrinters.at(printerNumber));
-                        cout<<"Printer "<<printerNumber<<" has been restocked."<<endl<<endl;
+                        cout<<"\x1b[32mPrinter "<<printerNumber<<" has been restocked. ✅\x1b[0m"<<endl<<endl;
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
-                        usleep(5000000);
+                        usleep(3000000);
                     }
-                    else if (printerAdminKey=="4"){
+                    else if (printerAdminKey=="3"){
                         system("clear");
                         while(true) {
                             system("clear");
@@ -303,15 +304,13 @@ int main() {
                             if (c==27)
                                 break;
                         }
-
-                        usleep(5000000);
                     }
-                } while (printerAdminKey!="5");
+                } while (printerAdminKey!="4");
             }
             else {
-                cout<<"Admin accessed denied."<<endl<<endl;
+                cout<<"\x1b[31mAdmin access denied. ❌\x1b[0m"<<endl<<endl;
                 cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
-                usleep(5000000); // pause for 5 sec
+                usleep(3000000); // pause for 3 sec
             }
         }
     } while (nacKey!="3");

@@ -63,13 +63,13 @@ void admin:: PrintPerBar(vector<printer> List_Printer){
     printHorizon(H, lenH);
     printVerti(V, lenV);
     for(int i = 0; i < 7; i++){
-        cout << V + "  P" << i + 1 << "  ";
+        cout << V + "  P" << i  << "  ";
         for(int k = 0; k < percent[i]; k++){
             cout << bar;
         }
         for(int a = 0; a < 100 - percent[i]; a++) cout << Bspace;
         cout << " " << percent[i];
-        for(int a = 0; a < 17; a++) cout << " ";
+        for(int a = 0; a < 18; a++) cout << " ";
         if(percent[i] != 100){
             if (percent[i] < 10) cout << " ";
             cout << " ";

@@ -88,7 +88,7 @@ int main() {
     studentInformation.addItem(s5);
 
     string nacKey, studentKey, printerStudKey, printerAdminKey;
-    string name, username;
+    string name, username, password2;
     char *password;
     int emplID;
 
@@ -96,8 +96,8 @@ int main() {
         s1.print(nacPrinters[rand() % 7], 1, "test");
     }
     
-//    thread thread(dequeuePrintJobs);
-//    thread.detach();
+    thread thread(dequeuePrintJobs);
+    thread.detach();
 
     do {
         system("clear");
@@ -243,8 +243,8 @@ int main() {
                         cout<<"Enter username: ";
                         cin>>username;
                         cout<<"Enter password: ";
-                        cin>>password;
-                        student newStudent(emplID,name,username,password);
+                        cin>>password2;
+                        student newStudent(emplID,name,username,password2);
                         studentInformation.addItem(newStudent);
                         cout<<"\x1b[32mNew Account Created for "<<name<<"!\x1b[0m"<<endl<<endl;
                         cout<<"\x1b[34m Loading... \x1b[0m"<<endl;
